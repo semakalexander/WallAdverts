@@ -131,6 +131,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607020802409_InitialCreate.cs" />
+    <Compile Include="Migrations\201607020802409_InitialCreate.Designer.cs">
+      <DependentUpon>201607020802409_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607022016567_MigrateDB.cs" />
+    <Compile Include="Migrations\201607022016567_MigrateDB.Designer.cs">
+      <DependentUpon>201607022016567_MigrateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607022134572_MigrateDB1.cs" />
+    <Compile Include="Migrations\201607022134572_MigrateDB1.Designer.cs">
+      <DependentUpon>201607022134572_MigrateDB1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Advert.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WallAdvertsContext.cs" />
@@ -242,6 +255,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\CheckAdvert.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -275,6 +289,7 @@
     <Content Include="Views\Shared\_LayoutAuth.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Home\Registration.cshtml" />
+    <Content Include="Views\Home\Wall.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Users\" />
@@ -283,6 +298,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607020802409_InitialCreate.resx">
+      <DependentUpon>201607020802409_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607022016567_MigrateDB.resx">
+      <DependentUpon>201607022016567_MigrateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607022134572_MigrateDB1.resx">
+      <DependentUpon>201607022134572_MigrateDB1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

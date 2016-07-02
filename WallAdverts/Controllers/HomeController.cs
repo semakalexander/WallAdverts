@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -38,13 +39,13 @@ namespace WallAdverts.Controllers
             else
                 Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
 
-            return View("Home", db.Users);
+            return PartialView("Home", db.Adverts);
         }
 
 
         public ActionResult Home()
         {
-            return View(db.Users);
+            return View(db.Adverts);
         }
 
         [HttpGet]
@@ -62,7 +63,7 @@ namespace WallAdverts.Controllers
                 HttpContext.Response.Cookies["id"].Value = userGet.Id.ToString();
                 Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
                 Session["Username"] = userGet.Login;
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Home", "Home",db.Adverts);
             }
             else
             {
@@ -76,7 +77,46 @@ namespace WallAdverts.Controllers
             Session["Username"] = "";
             Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
             HttpContext.Response.Cookies["id"].Value = "";
-            return RedirectToAction("Home", "Home");
+            return RedirectToAction("Home", "Home",db.Adverts);
+        }
+        
+        public ActionResult CreateAdvert(string nameAdvert, string descriptionAdvert)
+        {
+            if (nameAdvert.Trim() != "" || descriptionAdvert.Trim() != "")
+            {
+                Advert ad = new Advert();
+                ad.AuthorId=Convert.ToInt32(HttpContext.Request.Cookies["id"].Value);
+                ad.AuthorName = db.Users.FirstOrDefault(u => u.Id == ad.AuthorId).Login;
+                ad.DateCreate = DateTime.Now;
+                ad.Description = descriptionAdvert;
+                ad.Name = nameAdvert;
+                ad.ImageSrc = " ";
+                db.Adverts.Add(ad);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    string s = "";
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                       s+=string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            s += string.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                        StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "logSasa.txt");
+                        sw.Write(s);
+                        sw.Close();
+                    }
+                    throw;
+                }
+
+            }
+            return PartialView("Wall",db.Adverts);
         }
 
         [HttpGet]
@@ -99,7 +139,8 @@ namespace WallAdverts.Controllers
                 user.DateRegister = DateTime.Now;
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Home", "Home");
+            
+                return RedirectToAction("Home", "Home",db.Adverts);
             }
             else
                 return View();
@@ -118,6 +159,8 @@ namespace WallAdverts.Controllers
             var result = db.Users.FirstOrDefault(u => u.Email == email) == null;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

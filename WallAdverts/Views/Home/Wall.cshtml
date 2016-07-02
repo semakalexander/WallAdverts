@@ -1,0 +1,17 @@
+﻿@model IEnumerable<WallAdverts.Models.Advert>
+
+@foreach (var item in Model.OrderByDescending(m=>m.DateCreate))
+{
+   <div class="panel panel-success">
+       <div class="panel-heading">
+           <h3>@item.Name</h3>           
+       </div>
+       <div class="panel-body">
+           <img src="@item.ImageSrc" />
+           <p>@item.Description</p>
+       </div>
+       <div class="panel-footer text-right">
+           <span>Виклав <a href="#+@item.AuthorId">@item.AuthorName</a> @item.DateCreate.ToShortDateString()</span>
+       </div>
+   </div>
+}

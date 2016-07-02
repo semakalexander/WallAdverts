@@ -7,6 +7,46 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")
+    @Scripts.Render("~/bundles/jquery")
+
+
+    @Scripts.Render("~/Scripts/CheckAdvert.js")
+    <script type="text/javascript">
+        $(function () {
+            $("#Submit").on("click", function (e) {
+                var nameAdv = $("#nameAdvert").val();
+                var descAdv = $("#descriptionAdvert").val();
+                var fileip = document.getElementById('fileUpload');
+                var files = fileip.files
+
+                if (files.length > 0) {
+                    if (window.FormData != undefined) {
+                        var data = new FormData();
+                        data.append("advert", files[0]);
+
+                        $.ajax({
+                            type: "POST",
+                            url: '/Home/CreateAdvert/nameAdvert=' + nameAdv + "&descriptionAdvert=" + descAdv,
+                            contentType: false,
+                            processData: false,
+                            success: function (result) {
+                                console.log(result);
+                            },
+                            error: function (xhr, status, p3, p4) {
+                                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                                if (xhr.responseText && xhr.responseText[0] == "{")
+                                    err = JSON.parse(xhr.responseText).Message;
+                                console.log(err);
+                            }
+                        });
+                    }
+                    else {
+                        alert("This browser doesn't support HTML5 file uploads!");
+                    }
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -15,12 +55,10 @@
                 <a href="/Home/Home" class="navbar-brand">Стіна оголошень - тебе почує кожен</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li> <a href="/Home/Login/"><span class="glyphicon glyphicon-log-in"></span> Вхід</a></li>
-                <li> <a href="/Home/Registration/"><span class="glyphicon glyphicon-plus"></span> Реєстрація</a></li>
-                <li class="dropdown">              
+                <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="caret"></span><span class="glyphicon glyphicon-user"></span>      
-                                          @Session["Username"]                        
+                        <span class="caret"></span><span class="glyphicon glyphicon-user"></span>
+                        @Session["Username"]
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Page 1-1</a></li>
@@ -28,19 +66,76 @@
                         <li><a href="/Home/Logout/"><span class="glyphicon glyphicon-log-out"></span> Вийти</a></li>
                     </ul>
                 </li>
-              
+
             </ul>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-       
+
+    <div id="newAdvert" class="panel col-md-12">
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">Додати своє оголошення</a>
+                    </h4>
+
+                </div>
+                <div id="CollapsePanelAdvert" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      @*  @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall", LoadingElementId = "wallLoad", LoadingElementDuration = 10, }, new { @class = "form-horizontal", role = "form" }))
+    {*@
+                            <div class="form-group">
+
+                                <label for="nameAdvert" class="col-xs-3 control-label">Назва оголошення</label>
+                                <div class="col-xs-7">
+                                    <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
+
+                                </div>
+                                <p id="ErrorName" class="col-md-offset-3" style="color:red"></p>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="descriptionAdvert" class="col-sm-3 control-label">Опис оголошення</label>
+                                <div class="col-xs-7">
+                                    <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
+                                </div>
+                                <p id="ErrorDescription" class="col-md-offset-3" style="color:red">@ViewBag.ErrorMessageDescriptionAdvert</p>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-3">
+                                    <label class="btn btn-primary" for="fileUpload">
+                                        <input id="fileUpload" name="fileUpload" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                                        Завантажити зображення оголошення
+                                    </label>
+                                    <span class='label label-info' id="upload-file-info"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-offset-5">
+                                    <input type="submit" id="Submit" value="Додати своє оголошення" class="btn btn-success" />
+                                </div>
+                            </div>
+                       @* }*@
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <div id="wall" class="container body-content">
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/moment-with-locales.js")
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script> 
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     @RenderSection("scripts", required: false)
