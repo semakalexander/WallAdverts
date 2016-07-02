@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,7 +44,7 @@ namespace WallAdverts.Controllers
 
         public ActionResult Home()
         {
-                      return View(db.Users);
+            return View(db.Users);
         }
 
         [HttpGet]
@@ -76,8 +77,6 @@ namespace WallAdverts.Controllers
             return RedirectToAction("Home", "Home");
         }
 
-
-
         [HttpGet]
         public ActionResult Registration()
         {
@@ -85,14 +84,20 @@ namespace WallAdverts.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registration(User user)
+        public ActionResult Registration(User user, HttpPostedFileBase fileUpload)
         {
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid && fileUpload != null)
             {
-                
-                user.ImageSrc = "";
+
+                string path = AppDomain.CurrentDomain.BaseDirectory + "Images/Users/" + user.Login + Path.GetExtension(fileUpload.FileName);
+                fileUpload.SaveAs(path);
+
+                user.ImageSrc = path;
                 user.DateRegister = DateTime.Now;
-              
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Home", "Home");
             }
             else
                 return View();
@@ -101,7 +106,7 @@ namespace WallAdverts.Controllers
         [HttpGet]
         public JsonResult CheckLogin(string login)
         {
-            var result = db.Users.FirstOrDefault(u => u.Login == login)==null;
+            var result = db.Users.FirstOrDefault(u => u.Login == login) == null;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

@@ -3,53 +3,82 @@
     ViewBag.Title = "Registration";
     Layout = Session["LayoutSrc"].ToString();
 }
+<script type="text/javascript">
+    $(function () {
+        $('#DateBirthday').datetimepicker(
+          { language: 'ru' }
+        );
+    });
+</script>
+<div class="panel col-md-offset-2 col-md-8">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h2>Registration</h2>
+        </div>
 
-<h2>Registration</h2>
-@using (Html.BeginForm("Registration", "Home", FormMethod.Post))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email)
-        @Html.EditorFor(m => m.Email)<br />
-        @Html.ValidationMessageFor(m => m.Email)
+        <div class="panel-body" style="display:block">
+            @using (Html.BeginForm("Registration", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Введіть свою адресу" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Login, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Login, new { @class = "form-control", placeholder = "Введіть свій логін" })
+                        @Html.ValidationMessageFor(m => m.Login)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Введіть свій пароль" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Number, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", placeholder = "Користувачі зможуть бачити ваш номер(необов'язкове поле)" })
+                        @Html.ValidationMessageFor(m => m.Number)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DateBirthday, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.DateBirthday, new { @class = "form-control", placeholder = "yyyy-mm-dd" })
+                        @Html.ValidationMessageFor(m => m.DateBirthday)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <label class="btn btn-primary" for="fileUpload">
+                            <input id="fileUpload" name="fileUpload" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                            Завантажити зображення профілю
+                        </label>
+                        <span class='label label-info' id="upload-file-info"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-primary" name="formReg" value="Зареєструватись" />
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Login)
-        @Html.EditorFor(m => m.Login)<br />
-        @Html.ValidationMessageFor(m => m.Login)
-
-
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password)
-        @Html.EditorFor(m => m.Password)<br />
-        @Html.ValidationMessageFor(m => m.Password)
-
-
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Number)
-        @Html.EditorFor(m => m.Number)<br />
-        @Html.ValidationMessageFor(m => m.Number)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DateBirthday)
-
-        @Html.EditorFor(m => m.DateBirthday, new { @class = "form-control" })<br />
-        @Html.ValidationMessageFor(m => m.DateBirthday)
-    </div>
-
-    <a href="/Home/Home/" class="btn btn-danger">Повернутись на головну</a>
-    <input type="submit" class="btn btn-primary" name="formReg" value="Зареєструватись" /><br />
-    <span>Вже зареєстровані?</span>
-        <a href="/Home/Login/" class="btn btn-link"> Увійдіть</a>
-
-
-        <script type="text/javascript">
-            $(function () {
-                $('#DateBirthday').datetimepicker(
-                  { pickTime: false, language: 'ru' }
-                );
-            });
-        </script>
-
-}
+</div>

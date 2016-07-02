@@ -4,28 +4,39 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    @Scripts.Render("~/Scripts/moment-with-locales.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")
+    <script src="~/Scripts/bootstrap.file-input.js"></script>
+
 </head>
 <body>
-   <nav class="navbar navbar-default navbar-fixed-top">
-       <div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <a href="/Home/Home" class="navbar-brand">Стіна оголошень - тебе почує кожен</a>
             </div>
-           <ul class="nav navbar-nav navbar-right">
-               <li> <a href="/Home/Login/"><span class="glyphicon glyphicon-log-in"></span> Вхід</a></li>
-               <li> <a href="/Home/Registration/"><span class="glyphicon glyphicon-user"></span> Реєстрація</a></li>
-           </ul>
-       </div>     
-   </nav>
+            <ul class="nav navbar-nav navbar-right">
+                <li> <a href="/Home/Login/"><span class="glyphicon glyphicon-log-in"></span> Вхід</a></li>
+                <li> <a href="/Home/Registration/"><span class="glyphicon glyphicon-user"></span> Реєстрація</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container body-content">
-        @RenderBody()      
-       
+        @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
 </body>
 </html>
