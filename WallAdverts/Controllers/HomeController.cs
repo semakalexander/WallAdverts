@@ -29,6 +29,10 @@ namespace WallAdverts.Controllers
                     else
                         Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
                 }
+                else
+                {
+                    Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
+                }
             }
             else
                 Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
@@ -39,11 +43,7 @@ namespace WallAdverts.Controllers
 
         public ActionResult Home()
         {
-            /*  if (ViewBag.Master == null || ViewBag.Master == "" || ViewBag.Master == "~/Views/Shared/_LayoutAuth.cshtml")
-                  ViewBag.Master = "~/Views/Shared/_LayoutAuth.cshtml";
-              else
-                  ViewBag.Master = "~/Views/Shared/_Layout.cshtml";*/
-            return View(db.Users);
+                      return View(db.Users);
         }
 
         [HttpGet]
@@ -58,7 +58,6 @@ namespace WallAdverts.Controllers
             var userGet = db.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
             if (userGet != null)
             {
-                ViewBag.MessageSuccess = "Вітаємо в системі";
                 HttpContext.Response.Cookies["id"].Value = userGet.Id.ToString();
                 Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
                 Session["Username"] = userGet.Login;
@@ -66,7 +65,7 @@ namespace WallAdverts.Controllers
             }
             else
                 return View();
-          
+
         }
 
         public ActionResult Logout()
@@ -88,10 +87,31 @@ namespace WallAdverts.Controllers
         [HttpPost]
         public ActionResult Registration(User user)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                
+                user.ImageSrc = "";
+                user.DateRegister = DateTime.Now;
+              
+            }
+            else
+                return View();
         }
+
+        [HttpGet]
+        public JsonResult CheckLogin(string login)
+        {
+            var result = db.Users.FirstOrDefault(u => u.Login == login)==null;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CheckEmail(string email)
+        {
+            var result = db.Users.FirstOrDefault(u => u.Email == email) == null;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
