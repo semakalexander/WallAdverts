@@ -1,0 +1,21 @@
+﻿@model WallAdverts.Models.User
+@{
+    ViewBag.Title = "Login";
+    Layout = Session["LayoutSrc"].ToString();
+}
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email, new { @class = "form-control", placeholder = "Введіть свою адресу" })
+        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "help-block" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.EditorFor(m => m.Password, new { @class = "form-control", placeholder = "Введіть свій пароль" })
+        @Html.ValidationMessageFor(m => m.Password, null, new { @class = "help-block" })
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Войти" />
+}

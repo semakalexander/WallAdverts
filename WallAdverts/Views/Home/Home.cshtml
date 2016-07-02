@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<WallAdverts.Models.User>
-@{  
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+@{
+    ViewBag.Title = "Home";
+    Layout = Session["LayoutSrc"].ToString();
 }
 
+
+@
 <div>
     <h3>users</h3>
     <table class="table">
@@ -10,7 +14,7 @@
             <td><p>id</p></td>
             <td><p>email</p></td>
             <td><p>login</p></td>
-
+            <td><p>pass</p></td>
         </tr>
         @foreach (WallAdverts.Models.User user in Model)
             {
@@ -18,6 +22,8 @@
                 <td><p>@user.Id</p></td>
                 <td><p>@user.Email</p></td>
                 <td><p>@user.Login</p></td>
+                <td><p>@user.Password</p></td>
+
             </tr>
         }
     </table>

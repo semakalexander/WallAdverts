@@ -1,0 +1,55 @@
+﻿@model WallAdverts.Models.User
+@{
+    ViewBag.Title = "Registration";
+    Layout = Session["LayoutSrc"].ToString();
+}
+
+<h2>Registration</h2>
+@using (Html.BeginForm("Registration", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email)<br />
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Login)
+        @Html.EditorFor(m => m.Login)<br />
+        @Html.ValidationMessageFor(m => m.Login)
+
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.EditorFor(m => m.Password)<br />
+        @Html.ValidationMessageFor(m => m.Password)
+
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Number)
+        @Html.EditorFor(m => m.Number)<br />
+        @Html.ValidationMessageFor(m => m.Number)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateBirthday)
+
+        @Html.EditorFor(m => m.DateBirthday, new { @class = "form-control" })<br />
+        @Html.ValidationMessageFor(m => m.DateBirthday)
+    </div>
+
+    <a href="/Home/Home/" class="btn btn-danger">Повернутись на головну</a>
+    <input type="submit" class="btn btn-primary" name="formReg" value="Зареєструватись" /><br />
+    <span>Вже зареєстровані?</span>
+        <a href="/Home/Login/" class="btn btn-link"> Увійдіть</a>
+
+
+        <script type="text/javascript">
+            $(function () {
+                $('#DateBirthday').datetimepicker(
+                  { pickTime: false, language: 'ru' }
+                );
+            });
+        </script>
+
+}

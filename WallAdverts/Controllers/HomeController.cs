@@ -3,28 +3,99 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WallAdverts.Models;
 
 namespace WallAdverts.Controllers
 {
     public class HomeController : Controller
     {
+        WallAdvertsContext db = new WallAdvertsContext();
+
         public ActionResult Index()
         {
-            return View();
+
+            if (HttpContext.Request.Cookies["id"] != null)
+            {
+                int cookieId;
+                if (int.TryParse(HttpContext.Request.Cookies["id"].Value, out cookieId))
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == cookieId);
+                    if (user != null)
+                    {
+                        Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
+
+                        Session["Username"] = user.Login;
+                    }
+                    else
+                        Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
+                }
+            }
+            else
+                Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
+
+            return View("Home", db.Users);
         }
 
-        public ActionResult About()
+
+        public ActionResult Home()
         {
-            ViewBag.Message = "Your application description page.";
+            /*  if (ViewBag.Master == null || ViewBag.Master == "" || ViewBag.Master == "~/Views/Shared/_LayoutAuth.cshtml")
+                  ViewBag.Master = "~/Views/Shared/_LayoutAuth.cshtml";
+              else
+                  ViewBag.Master = "~/Views/Shared/_Layout.cshtml";*/
+            return View(db.Users);
+        }
 
+        [HttpGet]
+        public ActionResult Login()
+        {
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            var userGet = db.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+            if (userGet != null)
+            {
+                ViewBag.MessageSuccess = "Вітаємо в системі";
+                HttpContext.Response.Cookies["id"].Value = userGet.Id.ToString();
+                Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
+                Session["Username"] = userGet.Login;
+                return RedirectToAction("Home", "Home");
+            }
+            else
+                return View();
+          
+        }
+
+        public ActionResult Logout()
+        {
+            Session["Username"] = "";
+            Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
+            HttpContext.Response.Cookies["id"].Value = "";
+            return RedirectToAction("Home", "Home");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult Registration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Registration(User user)
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
