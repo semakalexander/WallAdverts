@@ -2,8 +2,13 @@
 @{
     ViewBag.Title = "Login";
     Layout = Session["LayoutSrc"].ToString();
+    Html.EnableClientValidation(false);
 }
-
+<script type="text/javascript">
+    function OnFailure(request, error) {
+        $("#Error").html("Книги указанного автора не содержатся в базе данных.");
+    }
+</script>
 <div class="panel col-md-offset-3 col-md-6">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -20,12 +25,13 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label"})
                     <div class="col-md-10">
 
-                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Введіть свій пароль" })
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Введіть свій пароль", type = "password" })
                     </div>
                 </div>
+                <p class="col-md-offset-2" style="color:red">@ViewBag.ErrorMessage</p>
                 <div class="form-group">
                     <input type="submit" class="btn btn-success col-md-offset-2" value="Ввійти" />
                 </div>

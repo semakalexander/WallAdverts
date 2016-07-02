@@ -54,9 +54,9 @@ namespace WallAdverts.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(User user)
+        public ActionResult Login(string Email, string Password)
         {
-            var userGet = db.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+            var userGet = db.Users.FirstOrDefault(u => u.Email == Email && u.Password == Password);
             if (userGet != null)
             {
                 HttpContext.Response.Cookies["id"].Value = userGet.Id.ToString();
@@ -65,8 +65,10 @@ namespace WallAdverts.Controllers
                 return RedirectToAction("Home", "Home");
             }
             else
+            {
+                ViewBag.ErrorMessage = "Користувача з такими даними не знайдено";
                 return View();
-
+            }
         }
 
         public ActionResult Logout()
