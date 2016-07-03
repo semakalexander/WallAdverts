@@ -23,16 +23,24 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="/Home/Home" class="navbar-brand">Стіна оголошень - тебе почує кожен</a>
+                <a href="/Home/Home" class="navbar-brand">@Resources.Resource.WallAdvertsName</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li> <a href="/Home/Login/"><span class="glyphicon glyphicon-log-in"></span> Вхід</a></li>
-                <li> <a href="/Home/Registration/"><span class="glyphicon glyphicon-plus"></span> Реєстрація</a></li>
+                <li> <a href="/Home/Login/"><span class="glyphicon glyphicon-log-in"></span> @Resources.Resource.Login</a></li>
+                <li> <a href="/Home/Registration/"><span class="glyphicon glyphicon-plus"></span> @Resources.Resource.Registration</a></li>
+                <li>
+                    <ul>
+                        <li>@Resources.Resource.SelectLanguage</li>
+                        <li>@Html.ActionLink("Українська", "ChangeLanguage", "Home", new { lang = "ua" })</li>
+                        <li>@Html.ActionLink("English", "ChangeLanguage", "Home", new { lang = "en" })</li>
+                        <!--todo ru-->
+                    </ul>
+
             </ul>
         </div>
     </nav>
 
-   
+
     <div class="container body-content">
         @RenderBody()
     </div>

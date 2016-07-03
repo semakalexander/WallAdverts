@@ -12,29 +12,35 @@ namespace WallAdverts.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [RegularExpression("[a-zA-Z]+[a-zA-z0-9]{3,19}", ErrorMessage = "Логін повинен складатись з латинських літер(починатись обов'язково з літери) та цифр, розмірністю від 4 до 20 символів")]
-        [Remote("CheckLogin", "Home", ErrorMessage = "Цей логін вже зайнятий")]
-        [Required(ErrorMessage = "Це обов'язкове поле!")]
+        [RegularExpression("[a-zA-Z]+[a-zA-z0-9]{3,19}", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRegExLogin")]
+        [Remote("CheckLogin", "Home", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorLoginBusy")]
+        [Required(ErrorMessageResourceType =typeof(Resources.Resource),ErrorMessageResourceName = "ErrorRequiredField")]
+        [Display(Name ="UserLogin",ResourceType = typeof(Resources.Resource))]
         public string Login { get; set; }
 
-        [RegularExpression("[a-zA-z0-9]{6,18}", ErrorMessage = "Пароль повинен складатись з латинських літер та цифр, розмірністю від 6 до 18 символів")]
-        [Required(ErrorMessage = "Це обов'язкове поле!")]
+        [RegularExpression("[a-zA-z0-9]{6,18}", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRegExPassword")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRequiredField")]
+        [Display(Name ="Password",ResourceType =typeof(Resources.Resource))]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [RegularExpression("[0-9]{0,12}", ErrorMessage = "Номер повинен складатись з цифр та не перевищувати 12 символів")]
-        [StringLength(12, ErrorMessage = "Недопустима довжина телефону")]
+        [RegularExpression("[0-9]{0,12}", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRegExNumber")]
+        [StringLength(12, ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorLengthNumber")]
+        [Display(Name = "Number", ResourceType = typeof(Resources.Resource))]
         public string Number { get; set; }
 
-        [Remote("CheckEmail", "Home", ErrorMessage = "Цей email уже використовується")]
-        [Required(ErrorMessage = "Це обов'язкове поле!")]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Введіть коректну адресу")]
+        [Remote("CheckEmail", "Home", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorEmailBusy")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRequiredField")]
+        [DataType(DataType.EmailAddress, ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorTypeEmail")]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resource))]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Це обов'язкове поле!")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRequiredField")]
         [DataType(DataType.Date)]
+        [Display(Name = "DateBirthday", ResourceType = typeof(Resources.Resource))]
         public DateTime DateBirthday { get; set; }
 
+        [Display(Name = "DateRegister", ResourceType = typeof(Resources.Resource))]
         [DataType(DataType.Date)]
         public DateTime DateRegister { get; set; }
 

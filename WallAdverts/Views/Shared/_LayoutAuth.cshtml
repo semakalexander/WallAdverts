@@ -10,45 +10,8 @@
     @Scripts.Render("~/bundles/jquery")
 
 
-    @Scripts.Render("~/Scripts/CheckAdvert.js")
-    <script type="text/javascript">
-        $(function () {
-            $("#fileUpload").on("change", function(){
-                var nameAdv = $("#nameAdvert").val();
-                var descAdv = $("#descriptionAdvert").val();
-                var fileip =$("fileUpload");
-                var files = fileip.files
-
-                if (files.length > 0) {
-                    $("#fileInfo").val(files[0].)
-                }
-                    if (window.FormData != undefined) {
-                        var data = new FormData();
-                        data.append("advert", files[0]);
-
-                        $.ajax({
-                            type: "POST",
-                            url:'@Url.Action("CreateAdvert","Home")?name='+nameAdv+'&descriptionAdvert='+descAdv,
-                            contentType: false,
-                            processData: false,
-                            success: function (result) {
-                                console.log(result);
-                            },
-                            error: function (xhr, status, p3, p4) {
-                                var err = "Error " + " " + status + " " + p3 + " " + p4;
-                                if (xhr.responseText && xhr.responseText[0] == "{")
-                                    err = JSON.parse(xhr.responseText).Message;
-                                console.log(err);
-                            }
-                        });
-                    }
-                    else {
-                        alert("This browser doesn't support HTML5 file uploads!");
-                    }
-                }
-            });
-        });
-    </script>
+   
+  
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -84,46 +47,32 @@
                 </div>
                 <div id="CollapsePanelAdvert" class="panel-collapse collapse">
                     <div class="panel-body">
-                   @*  @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall", LoadingElementId = "wallLoad", LoadingElementDuration = 10, }, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-    {*@ 
-                            <div class="form-group">
+                        @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall", LoadingElementId = "wallLoad", LoadingElementDuration = 10, }, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                            {
+                        <div class="form-group">
 
-                                <label for="nameAdvert" class="col-xs-3 control-label">Назва оголошення</label>
-                                <div class="col-xs-7">
-                                    <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
-
-                                </div>
-                                <p id="ErrorName" class="col-md-offset-3" style="color:red"></p>
-
+                            <label for="nameAdvert" class="col-xs-3 control-label">Назва оголошення</label>
+                            <div class="col-xs-7">
+                                <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
                             </div>
 
-                            <div class="form-group">
-                                <label for="descriptionAdvert" class="col-sm-3 control-label">Опис оголошення</label>
-                                <div class="col-xs-7">
-                                    <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
-                                </div>
-                                <p id="ErrorDescription" class="col-md-offset-3" style="color:red">@ViewBag.ErrorMessageDescriptionAdvert</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descriptionAdvert" class="col-sm-3 control-label">Опис оголошення</label>
+                            <div class="col-xs-7">
+                                <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
                             </div>
+                        </div>                                            
 
-                            <div class="form-group">
-                                <div class="col-md-offset-3">
-                                    <label class="btn btn-primary" for="fileUpload">
-                                        <input id="fileUpload" name="fileUpload" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-                                             Завантажити зображення оголошення
-                                    </label>
-                                    <span class='label label-info' id="upload-file-info"></span>
-                                    <input type="hidden" id="fileInfo" value="" />
-                                </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-5">
+                                <input type="submit" id="Submit" value="Додати своє оголошення" class="btn btn-success" />
                             </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-offset-5">
-                                    <input type="submit" id="Submit" value="Додати своє оголошення" class="btn btn-success" />
-                                </div>
-                            </div>
-                      
+                        </div>
 
 
+                      }
 
                     </div>
                 </div>
@@ -145,7 +94,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
-    
+      
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
