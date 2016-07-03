@@ -1,0 +1,53 @@
+﻿@model WallAdverts.Models.MyProfile
+@{
+    ViewBag.Title = "Profile";
+    Layout = Session["LayoutSrc"].ToString();
+
+}
+<div class="container">
+    <div class="row">
+        <div class="panel">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>@Model.User.Login</h2>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="userImg" src="@Model.User.ImageSrc" />
+                    </div>
+                    <h3>Contacts:</h3>
+                    <div class="col-md-3">                      
+                        <h5>@Model.User.Email</h5>
+                        <h5>@Model.User.Number</h5>                      
+                    </div>
+                    <div class="col-md-3">                        
+                        <h5>Дата народження: @Model.User.DateBirthday.ToShortDateString()</h5>
+                        <h5>Дата реєстрації: @Model.User.DateRegister.ToShortDateString()</h5>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var item in Model.Adverts.OrderByDescending(m => m.DateCreate))
+        {
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3>@item.Name</h3>
+                </div>
+                <div class="panel-body">
+                    <img src="@item.ImageSrc" />
+                    <p>@item.Description</p>
+                </div>
+                <div class="panel-footer text-right">
+                   @Resources.Resource.Posted @item.DateCreate.ToShortDateString()
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+    </div>

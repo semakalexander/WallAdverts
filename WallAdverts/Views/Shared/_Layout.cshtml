@@ -17,7 +17,22 @@
     @Styles.Render("~/Content/bootstrap.min.css")
     @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")
     <script src="~/Scripts/bootstrap.file-input.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".userImg").error(function () {
+               
+                $(this).attr({
+                    src: '/Images/Users/Default.jpg'
+                });
+            });
+            $(".advertImg").error(function () {
 
+                $(this).attr({
+                    src: '/Images/Adverts/Default.jpg'
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">

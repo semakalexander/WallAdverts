@@ -8,7 +8,20 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")
     @Scripts.Render("~/bundles/jquery")
-
+    <script type="text/javascript">
+        $(function () {
+            $(".userImg").error(function () {
+                $(this).attr({
+                    src: '/Images/Users/Default.jpg'
+                });
+            });
+            $(".advertImg").error(function () {
+                $(this).attr({
+                    src: '/Images/Adverts/Default.jpg'
+                });
+            });
+        });
+    </script>
 
 
 
@@ -24,8 +37,8 @@
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                       <span class="glyphicon glyphicon-globe"></span>
-                       @Resources.Resource.SelectLanguage
+                        <span class="glyphicon glyphicon-globe"></span>
+                        @Resources.Resource.SelectLanguage
                     </a>
                     <ul class="dropdown-menu">
                         <li>@Html.ActionLink("Українська", "ChangeLanguage", new { lang = "uk" })</li>
@@ -34,7 +47,7 @@
                     </ul>
                 </li>
 
-            
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="caret"></span><span class="glyphicon glyphicon-user"></span>
@@ -51,51 +64,8 @@
         </div>
     </nav>
 
-    <div id="newAdvert" class="panel col-md-12">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
 
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">@Resources.Resource.AddAdvert</a>
-                    </h4>
-
-                </div>
-                <div id="CollapsePanelAdvert" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall" }, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-                        {
-                            <div class="form-group">
-                                <label for="nameAdvert" class="col-xs-3 control-label">@Resources.Resource.AdvertName</label>
-                                <div class="col-xs-7">
-                                    <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="descriptionAdvert" class="col-sm-3 control-label">@Resources.Resource.AdvertDescription</label>
-                                <div class="col-xs-7">
-                                    <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-offset-5">
-                                    <input type="submit" id="Submit" value="@Resources.Resource.AddAdvert" class="btn btn-success" />
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-
-    <div id="wall" class="container body-content">
-        @RenderBody()
-    </div>
-
+    @RenderBody()
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/moment-with-locales.js")
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>

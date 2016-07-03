@@ -106,7 +106,7 @@ namespace WallAdverts.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateAdvert(string nameAdvert, string descriptionAdvert)
+        public JsonResult CreateAdvert(string nameAdvert, string descriptionAdvert)
         {
             if (nameAdvert.Trim() != "" && descriptionAdvert.Trim() != "")
             {
@@ -116,7 +116,9 @@ namespace WallAdverts.Controllers
                 ad.DateCreate = DateTime.Now;
                 ad.Description = descriptionAdvert;
                 ad.Name = nameAdvert;
-                ad.ImageSrc = "";
+                var name = Server.MapPath("~/Images/Adverts/" + ad.Id);
+                Request.Files[0].SaveAs(name);
+                ad.ImageSrc = name;
                 db.Adverts.Add(ad);
                 try
                 {
@@ -142,8 +144,11 @@ namespace WallAdverts.Controllers
                 }
 
             }
-            return PartialView("Wall", db.Adverts);
+            return Json(db.Adverts, JsonRequestBehavior.AllowGet);
+            //  return PartialView("Wall", db.Adverts);
         }
+
+
 
         [HttpGet]
         public ActionResult Registration()
@@ -156,11 +161,13 @@ namespace WallAdverts.Controllers
         {
             if (ModelState.IsValid && fileUpload != null)
             {
-                string path = AppDomain.CurrentDomain.BaseDirectory + "Images/Users/" + user.Login + Path.GetExtension(fileUpload.FileName);
+                string path = AppDomain.CurrentDomain.BaseDirectory + "Images\\Users\\" + user.Login + Path.GetExtension(fileUpload.FileName);
                 fileUpload.SaveAs(path);
-
-                user.ImageSrc = path;
+                if (user.Number == null)
+                    user.Number = "";
+                user.ImageSrc = "\\Images\\Users\\" + user.Login;
                 user.DateRegister = DateTime.Now;
+                user.Role = "User";
                 db.Users.Add(user);
                 db.SaveChanges();
                 HttpContext.Response.Cookies["id"].Value = user.Id.ToString();
@@ -170,6 +177,16 @@ namespace WallAdverts.Controllers
             }
             else
                 return View();
+        }
+
+        public ActionResult ShowProfile(int id)
+        {
+            User user = db.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+                return HttpNotFound();
+            var adverts = db.Adverts.Where(a => a.AuthorId == id).ToList();
+            MyProfile profile = new MyProfile() { User = user, Adverts = adverts };
+            return View(profile);
         }
 
         [HttpGet]

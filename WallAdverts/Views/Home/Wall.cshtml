@@ -7,12 +7,12 @@
            <h3>@item.Name</h3>           
        </div>
        <div class="panel-body">
-           <img src="@item.ImageSrc" />
+           <img class="advertImg" src="@item.ImageSrc" />
            <p>@item.Description</p>
        </div>
        <div class="panel-footer text-right">
-          @Resources.Resource.Posted &nbsp;
-            <a href="#+@item.AuthorId"> @item.AuthorName </a> 
+          @Resources.Resource.Posted
+     @Html.ActionLink(item.AuthorName, "ShowProfile", new { id = @item.AuthorId });
            @item.DateCreate.ToShortDateString()
        </div>
    </div>

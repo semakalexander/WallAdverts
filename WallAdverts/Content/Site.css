@@ -16,13 +16,16 @@
     white-space: normal;
 }
 
-textarea{
-    resize:none;
-}
-.field-validation-error {
-    color:red;
-    font-weight:bold;    
-    text-align:center;    
+textarea {
+    resize: none;
 }
 
- 
+.field-validation-error {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+img {
+    width: 250px;
+}
