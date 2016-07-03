@@ -13,20 +13,22 @@
     @Scripts.Render("~/Scripts/CheckAdvert.js")
     <script type="text/javascript">
         $(function () {
-            $("#Submit").on("click", function (e) {
+            $("#fileUpload").on("change", function(){
                 var nameAdv = $("#nameAdvert").val();
                 var descAdv = $("#descriptionAdvert").val();
-                var fileip = document.getElementById('fileUpload');
+                var fileip =$("fileUpload");
                 var files = fileip.files
 
                 if (files.length > 0) {
+                    $("#fileInfo").val(files[0].)
+                }
                     if (window.FormData != undefined) {
                         var data = new FormData();
                         data.append("advert", files[0]);
 
                         $.ajax({
                             type: "POST",
-                            url: '/Home/CreateAdvert/nameAdvert=' + nameAdv + "&descriptionAdvert=" + descAdv,
+                            url:'@Url.Action("CreateAdvert","Home")?name='+nameAdv+'&descriptionAdvert='+descAdv,
                             contentType: false,
                             processData: false,
                             success: function (result) {
@@ -82,8 +84,8 @@
                 </div>
                 <div id="CollapsePanelAdvert" class="panel-collapse collapse">
                     <div class="panel-body">
-                      @*  @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall", LoadingElementId = "wallLoad", LoadingElementDuration = 10, }, new { @class = "form-horizontal", role = "form" }))
-    {*@
+                   @*  @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall", LoadingElementId = "wallLoad", LoadingElementDuration = 10, }, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {*@ 
                             <div class="form-group">
 
                                 <label for="nameAdvert" class="col-xs-3 control-label">Назва оголошення</label>
@@ -107,9 +109,10 @@
                                 <div class="col-md-offset-3">
                                     <label class="btn btn-primary" for="fileUpload">
                                         <input id="fileUpload" name="fileUpload" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-                                        Завантажити зображення оголошення
+                                             Завантажити зображення оголошення
                                     </label>
                                     <span class='label label-info' id="upload-file-info"></span>
+                                    <input type="hidden" id="fileInfo" value="" />
                                 </div>
                             </div>
 
@@ -118,7 +121,10 @@
                                     <input type="submit" id="Submit" value="Додати своє оголошення" class="btn btn-success" />
                                 </div>
                             </div>
-                       @* }*@
+                      
+
+
+
                     </div>
                 </div>
             </div>
@@ -138,6 +144,8 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>

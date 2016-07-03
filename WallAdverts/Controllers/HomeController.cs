@@ -80,17 +80,21 @@ namespace WallAdverts.Controllers
             return RedirectToAction("Home", "Home",db.Adverts);
         }
         
-        public ActionResult CreateAdvert(string nameAdvert, string descriptionAdvert)
+        [HttpPost]
+        public ActionResult CreateAdvert(string nameAdvert, string descriptionAdvert, HttpPostedFileBase fileUpload)
         {
-            if (nameAdvert.Trim() != "" || descriptionAdvert.Trim() != "")
+            if (nameAdvert.Trim() != "" && descriptionAdvert.Trim() != ""&&fileUpload!=null)
             {
+             
                 Advert ad = new Advert();
                 ad.AuthorId=Convert.ToInt32(HttpContext.Request.Cookies["id"].Value);
                 ad.AuthorName = db.Users.FirstOrDefault(u => u.Id == ad.AuthorId).Login;
                 ad.DateCreate = DateTime.Now;
                 ad.Description = descriptionAdvert;
                 ad.Name = nameAdvert;
-                ad.ImageSrc = " ";
+                string path = AppDomain.CurrentDomain.BaseDirectory + "Adverts/Users/" + ad.Id + Path.GetExtension(fileUpload.FileName);
+                fileUpload.SaveAs(path);
+                ad.ImageSrc = path;
                 db.Adverts.Add(ad);
                 try
                 {
