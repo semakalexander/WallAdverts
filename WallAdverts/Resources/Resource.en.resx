@@ -118,46 +118,46 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAdvert" xml:space="preserve">
-    <value>Додати своє оголошення</value>
+    <value>Add Advert</value>
   </data>
   <data name="AdvertDescription" xml:space="preserve">
-    <value>Опис оголошення</value>
+    <value>Advert Description</value>
   </data>
   <data name="AdvertName" xml:space="preserve">
-    <value>Назва оголошення</value>
+    <value>Advert Name</value>
   </data>
   <data name="Authorization" xml:space="preserve">
-    <value>Авторизація</value>
+    <value>Authorization</value>
   </data>
   <data name="DateBirthday" xml:space="preserve">
-    <value>Дата народження</value>
+    <value>Birthday</value>
   </data>
   <data name="DateFormat" xml:space="preserve">
-    <value>рррр-мм-дд</value>
+    <value>yyyy-mm-dd</value>
   </data>
   <data name="DateRegister" xml:space="preserve">
-    <value>Дата реєстрації</value>
+    <value>Register Date</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Електронна адреса</value>
+    <value>Email</value>
   </data>
   <data name="EnterEmail" xml:space="preserve">
-    <value>Введіть свою адресу</value>
+    <value>Enter your email</value>
   </data>
   <data name="EnterLogin" xml:space="preserve">
-    <value>Введіть свій логін</value>
+    <value>Enter your login</value>
   </data>
   <data name="EnterPassword" xml:space="preserve">
-    <value>Введіть свій пароль</value>
+    <value>Enter your password</value>
   </data>
   <data name="ErrorEmailBusy" xml:space="preserve">
-    <value>Ця адреса уже використовується</value>
+    <value>This email is busy</value>
   </data>
   <data name="ErrorLengthNumber" xml:space="preserve">
-    <value>Недопустима довжина телефону</value>
+    <value>Invalid length</value>
   </data>
   <data name="ErrorLoginBusy" xml:space="preserve">
-    <value>Цей логін вже зайнятий</value>
+    <value>This login is busy</value>
   </data>
   <data name="ErrorRegExLogin" xml:space="preserve">
     <value>Логін повинен складатись з латинських літер(починатись обов'язково з літери) та цифр, розмірністю від 4 до 20 символів</value>
@@ -169,51 +169,51 @@
     <value>Пароль повинен складатись з латинських літер та цифр, розмірністю від 6 до 18 символів</value>
   </data>
   <data name="ErrorRequiredField" xml:space="preserve">
-    <value>Це обов'язкове поле!</value>
+    <value>Required field</value>
   </data>
   <data name="ErrorTypeEmail" xml:space="preserve">
-    <value>Введіть коректну адресу</value>
+    <value>Enter a correct email</value>
   </data>
   <data name="LanguageName" xml:space="preserve">
     <value>uk</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Вхід</value>
+    <value>Log in</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>Вийти</value>
+    <value>Log out</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>Номер телефону</value>
+    <value>Phone number</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Пароль</value>
+    <value>Password</value>
   </data>
   <data name="Posted" xml:space="preserve">
-    <value>Виклав</value>
+    <value>Posted</value>
   </data>
   <data name="Registration" xml:space="preserve">
-    <value>Реєстрація</value>
+    <value>Registration</value>
   </data>
   <data name="Role" xml:space="preserve">
-    <value>Роль в системі</value>
+    <value>Role</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
-    <value>Вибрати мову</value>
+    <value>Select Language</value>
   </data>
   <data name="SignUp" xml:space="preserve">
-    <value>Зареєструватись</value>
+    <value>Sign Up</value>
   </data>
   <data name="UploadImageUser" xml:space="preserve">
-    <value>Завантажити зображення профілю</value>
+    <value>Upload user image</value>
   </data>
   <data name="UserLogin" xml:space="preserve">
-    <value>Логін</value>
+    <value>Login</value>
   </data>
   <data name="UsersCanSeeNumber" xml:space="preserve">
-    <value>Користувачі зможуть бачити ваш номер(необов'язкове поле)</value>
+    <value>Users can see your number</value>
   </data>
   <data name="WallAdvertsName" xml:space="preserve">
-    <value>Стіна оголошень - тебе почує кожен</value>
+    <value>Wall Adverts</value>
   </data>
 </root>

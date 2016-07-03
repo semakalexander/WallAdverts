@@ -61,11 +61,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Додати своє оголошення.
+        /// </summary>
+        public static string AddAdvert {
+            get {
+                return ResourceManager.GetString("AddAdvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Опис оголошення.
+        /// </summary>
+        public static string AdvertDescription {
+            get {
+                return ResourceManager.GetString("AdvertDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Назва оголошення.
+        /// </summary>
+        public static string AdvertName {
+            get {
+                return ResourceManager.GetString("AdvertName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Авторизація.
+        /// </summary>
+        public static string Authorization {
+            get {
+                return ResourceManager.GetString("Authorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дата народження.
         /// </summary>
         public static string DateBirthday {
             get {
                 return ResourceManager.GetString("DateBirthday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to рррр-мм-дд.
+        /// </summary>
+        public static string DateFormat {
+            get {
+                return ResourceManager.GetString("DateFormat", resourceCulture);
             }
         }
         
@@ -84,6 +129,33 @@ namespace Resources {
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введіть свою адресу.
+        /// </summary>
+        public static string EnterEmail {
+            get {
+                return ResourceManager.GetString("EnterEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введіть свій логін.
+        /// </summary>
+        public static string EnterLogin {
+            get {
+                return ResourceManager.GetString("EnterLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введіть свій пароль.
+        /// </summary>
+        public static string EnterPassword {
+            get {
+                return ResourceManager.GetString("EnterPassword", resourceCulture);
             }
         }
         
@@ -160,7 +232,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ua.
+        ///   Looks up a localized string similar to uk.
         /// </summary>
         public static string LanguageName {
             get {
@@ -205,11 +277,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Виклав.
+        /// </summary>
+        public static string Posted {
+            get {
+                return ResourceManager.GetString("Posted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Реєстрація.
         /// </summary>
         public static string Registration {
             get {
                 return ResourceManager.GetString("Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Роль в системі.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
         
@@ -223,11 +313,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Зареєструватись.
+        /// </summary>
+        public static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Завантажити зображення профілю.
+        /// </summary>
+        public static string UploadImageUser {
+            get {
+                return ResourceManager.GetString("UploadImageUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Логін.
         /// </summary>
         public static string UserLogin {
             get {
                 return ResourceManager.GetString("UserLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Користувачі зможуть бачити ваш номер(необов&apos;язкове поле).
+        /// </summary>
+        public static string UsersCanSeeNumber {
+            get {
+                return ResourceManager.GetString("UsersCanSeeNumber", resourceCulture);
             }
         }
         

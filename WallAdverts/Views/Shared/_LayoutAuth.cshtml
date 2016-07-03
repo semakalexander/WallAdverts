@@ -10,16 +10,31 @@
     @Scripts.Render("~/bundles/jquery")
 
 
-   
-  
+
+
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="/Home/Home" class="navbar-brand">Стіна оголошень - тебе почує кожен</a>
+                <a href="/Home/Home" class="navbar-brand">@Resources.Resource.WallAdvertsName</a>
             </div>
+
             <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                       <span class="glyphicon glyphicon-globe"></span>
+                       @Resources.Resource.SelectLanguage
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Українська", "ChangeLanguage", new { lang = "uk" })</li>
+                        <li>@Html.ActionLink("English", "ChangeLanguage", new { lang = "en" })</li>
+                        <!--todo ru-->
+                    </ul>
+                </li>
+
+            
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="caret"></span><span class="glyphicon glyphicon-user"></span>
@@ -28,7 +43,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Page 1-1</a></li>
                         <li><a href="#">Page 1-2</a></li>
-                        <li><a href="/Home/Logout/"><span class="glyphicon glyphicon-log-out"></span> Вийти</a></li>
+                        <li><a href="/Home/Logout/"><span class="glyphicon glyphicon-log-out"></span> @Resources.Resource.Logout</a></li>
                     </ul>
                 </li>
 
@@ -40,52 +55,45 @@
         <div class="panel-group">
             <div class="panel panel-primary">
                 <div class="panel-heading">
+
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">Додати своє оголошення</a>
+                        <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">@Resources.Resource.AddAdvert</a>
                     </h4>
 
                 </div>
                 <div id="CollapsePanelAdvert" class="panel-collapse collapse">
                     <div class="panel-body">
-                        @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall", LoadingElementId = "wallLoad", LoadingElementDuration = 10, }, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-                            {
-                        <div class="form-group">
-
-                            <label for="nameAdvert" class="col-xs-3 control-label">Назва оголошення</label>
-                            <div class="col-xs-7">
-                                <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
+                        @using (Ajax.BeginForm("CreateAdvert", "Home", new AjaxOptions { UpdateTargetId = "wall" }, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-group">
+                                <label for="nameAdvert" class="col-xs-3 control-label">@Resources.Resource.AdvertName</label>
+                                <div class="col-xs-7">
+                                    <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
+                                </div>
                             </div>
 
-                        </div>
-
-                        <div class="form-group">
-                            <label for="descriptionAdvert" class="col-sm-3 control-label">Опис оголошення</label>
-                            <div class="col-xs-7">
-                                <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
+                            <div class="form-group">
+                                <label for="descriptionAdvert" class="col-sm-3 control-label">@Resources.Resource.AdvertDescription</label>
+                                <div class="col-xs-7">
+                                    <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
+                                </div>
                             </div>
-                        </div>                                            
 
-                        <div class="form-group">
-                            <div class="col-xs-offset-5">
-                                <input type="submit" id="Submit" value="Додати своє оголошення" class="btn btn-success" />
+                            <div class="form-group">
+                                <div class="col-xs-offset-5">
+                                    <input type="submit" id="Submit" value="@Resources.Resource.AddAdvert" class="btn btn-success" />
+                                </div>
                             </div>
-                        </div>
-
-
-                      }
-
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
+    
 
     <div id="wall" class="container body-content">
         @RenderBody()
-
     </div>
 
     @Scripts.Render("~/bundles/jqueryval")
@@ -94,8 +102,6 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
-      
-
     @RenderSection("scripts", required: false)
 </body>
 </html>

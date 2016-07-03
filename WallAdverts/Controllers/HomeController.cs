@@ -47,10 +47,10 @@ namespace WallAdverts.Controllers
         public ActionResult ChangeLanguage(string lang)
         {
             string returnUrl = Request.UrlReferrer.AbsolutePath;
-            List<string> cultures = new List<string> { "ua", "ru", "en" };
+            List<string> cultures = new List<string> { "uk", "ru", "en" };
             if (!cultures.Contains(lang))
             {
-                lang = "ua";
+                lang = "uk";
             }
 
             HttpCookie cultureCookie = HttpContext.Request.Cookies["lang"];

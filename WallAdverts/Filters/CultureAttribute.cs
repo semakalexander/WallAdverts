@@ -13,23 +13,24 @@ namespace WallAdverts.Filters
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
+        
+        }
+
+        public void OnActionExecuting(ActionExecutingContext filterContext)
+        {
             string cultureName = null;
             HttpCookie cultureCookie = filterContext.HttpContext.Request.Cookies["lang"];
             if (cultureCookie != null)
                 cultureName = cultureCookie.Value;
             else
-                cultureName = "ua";
+                cultureName = "uk";
 
-            List<string> cultures = new List<string> { "ua", "ru", "en" };
+            List<string> cultures = new List<string> { "uk", "ru", "en" };
             if (!cultures.Contains(cultureName))
-                cultureName = "ua";
+                cultureName = "uk";
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cultureName);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(cultureName);
-        }
-
-        public void OnActionExecuting(ActionExecutingContext filterContext)
-        {
         }
         
     }

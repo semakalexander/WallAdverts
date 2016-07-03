@@ -44,6 +44,9 @@ namespace WallAdverts.Models
         [DataType(DataType.Date)]
         public DateTime DateRegister { get; set; }
 
+        [Display(Name = "Role", ResourceType = typeof(Resources.Resource))]
+        public string Role { get; set; }
+
         public string ImageSrc { get; set; }
     }
 }

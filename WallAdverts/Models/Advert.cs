@@ -12,15 +12,13 @@ namespace WallAdverts.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Це обов'язкове поле!")]
+        [Required(ErrorMessageResourceType =typeof(Resources.Resource),ErrorMessageResourceName ="ErorRequiredField")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Це обов'язкове поле!")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErorRequiredField")]
         public string Description { get; set; }
 
-
         public DateTime DateCreate { get; set; }
-
 
         public int AuthorId { get; set; }
 

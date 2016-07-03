@@ -144,11 +144,20 @@
     <Compile Include="Migrations\201607022134572_MigrateDB1.Designer.cs">
       <DependentUpon>201607022134572_MigrateDB1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607031302430_MigrationDB.cs" />
+    <Compile Include="Migrations\201607031302430_MigrationDB.Designer.cs">
+      <DependentUpon>201607031302430_MigrationDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Advert.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WallAdvertsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resource.en.Designer.cs">
+      <DependentUpon>Resource.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -350,6 +359,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607022134572_MigrateDB1.resx">
       <DependentUpon>201607022134572_MigrateDB1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607031302430_MigrationDB.resx">
+      <DependentUpon>201607031302430_MigrationDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

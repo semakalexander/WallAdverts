@@ -7,7 +7,7 @@
 <div class="panel col-md-offset-2 col-md-8">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h2>Реєстрація</h2>
+            <h2>@Resources.Resource.Registration</h2>
         </div>
 
         <div class="panel-body" style="display:block">
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Введіть свою адресу" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Resources.Resource.EnterEmail })
                         @Html.ValidationMessageFor(m => m.Email)
                     </div>
 
@@ -34,7 +34,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Введіть свій пароль" })
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = Resources.Resource.EnterPassword })
                         @Html.ValidationMessageFor(m => m.Password)
                     </div>
 
@@ -43,7 +43,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Number, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", placeholder = "Користувачі зможуть бачити ваш номер(необов'язкове поле)" })
+                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", placeholder = Resources.Resource.UsersCanSeeNumber })
                         @Html.ValidationMessageFor(m => m.Number)
                     </div>
 
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.DateBirthday, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.DateBirthday, new { @class = "form-control", placeholder = "yyyy-mm-dd" })
+                        @Html.TextBoxFor(m => m.DateBirthday, new { @class = "form-control", placeholder = Resources.Resource.DateFormat })
                         @Html.ValidationMessageFor(m => m.DateBirthday)
                     </div>
 
@@ -62,14 +62,14 @@
                     <div class="col-md-offset-2 col-md-10">
                         <label class="btn btn-primary" for="fileUpload">
                             <input id="fileUpload" name="fileUpload" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
-                            Завантажити зображення профілю
+                           @Resources.Resource.UploadImageUser
                         </label>
                         <span class='label label-info' id="upload-file-info"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" class="btn btn-primary" name="formReg" value="Зареєструватись" />
+                        <input type="submit" class="btn btn-primary" name="formReg" value="@Resources.Resource.SignUp" />
                     </div>
                 </div>
             }
