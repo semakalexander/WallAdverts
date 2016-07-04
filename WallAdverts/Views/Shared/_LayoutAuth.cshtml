@@ -6,9 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+
+
+
+
     @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/moment-with-locales.js")
+    @Scripts.Render("~/bundles/bootstrap")
+  
+
+
     <script type="text/javascript">
         $(function () {
             $(".userImg").error(function () {
@@ -74,12 +84,7 @@
 
   
 
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/moment-with-locales.js")
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
-    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+  
 
 
   

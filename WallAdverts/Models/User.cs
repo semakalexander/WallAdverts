@@ -36,11 +36,13 @@ namespace WallAdverts.Models
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRequiredField")]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Display(Name = "DateBirthday", ResourceType = typeof(Resources.Resource))]
         public DateTime DateBirthday { get; set; }
 
         [Display(Name = "DateRegister", ResourceType = typeof(Resources.Resource))]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DateRegister { get; set; }
 

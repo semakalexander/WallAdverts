@@ -27,5 +27,12 @@ textarea {
 }
 
 img {
-    width: 250px;
+    width: 225px;
+    float:left;
+}
+
+pre{
+    background-color: #ffffff;
+    border:none;
+    font-size:1.5em;
 }

@@ -112,7 +112,7 @@ namespace WallAdverts.Controllers
                 ad.AuthorId = Convert.ToInt32(HttpContext.Request.Cookies["id"].Value);
                 ad.AuthorName = db.Users.FirstOrDefault(u => u.Id == ad.AuthorId).Login;
                 ad.DateCreate = DateTime.Now;
-                ad.Description = descriptionAdvert;
+                ad.Description = descriptionAdvert.Replace("_/_/NEWLINE_/_/","\n");
                 ad.Name = nameAdvert;
                 int idMax = 0;
                 if (db.Adverts.ToList().Count > 0)

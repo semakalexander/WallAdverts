@@ -10,11 +10,14 @@
        </div>
        <div class="panel-body">
            <img class="advertImg" src="@item.ImageSrc" />
-           <p>@item.Description</p>
+           <div class="col-md-offset-3">
+               <pre>@MvcHtmlString.Create(@item.Description.Replace(Environment.NewLine, "<br />"))</pre>
+           </div>
+       
        </div>
        <div class="panel-footer text-right">
           @Resources.Resource.Posted
-     @Html.ActionLink(item.AuthorName, "ShowProfile", new { id = @item.AuthorId });
+     @Html.ActionLink(item.AuthorName, "ShowProfile", new { id = @item.AuthorId })
            @item.DateCreate.ToShortDateString()
        </div>
    </div>

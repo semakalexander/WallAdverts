@@ -16,6 +16,7 @@ namespace WallAdverts.Models
         public string Name { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErorRequiredField")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public DateTime DateCreate { get; set; }
