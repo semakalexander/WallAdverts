@@ -17,32 +17,28 @@ namespace WallAdverts.Controllers
 
         public ActionResult Index()
         {
-
-            if (HttpContext.Request.Cookies["id"] != null)
+            Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
+            int cookieId;
+            if (HttpContext.Request.Cookies["id"] == null || !int.TryParse(HttpContext.Request.Cookies["id"].Value, out cookieId))
             {
-                int cookieId;
-                if (int.TryParse(HttpContext.Request.Cookies["id"].Value, out cookieId))
-                {
-                    var user = db.Users.FirstOrDefault(u => u.Id == cookieId);
-                    if (user != null)
-                    {
-                        Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
 
-                        Session["Username"] = user.Login;
-                    }
-                    else
-                        Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
-                }
-                else
-                {
-                    Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
-                }
+                return PartialView("Home", db.Adverts);
+            }
+
+            var user = db.Users.FirstOrDefault(u => u.Id == cookieId);
+            if (user == null)
+            {
+                return PartialView("Home", db.Adverts);
             }
             else
-                Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
-
-            return PartialView("Home", db.Adverts);
+            {
+                Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
+                Session["Username"] = user.Login;
+                return PartialView("HomeAuth", db.Adverts);
+            }
         }
+        
+
 
         public ActionResult ChangeLanguage(string lang)
         {
@@ -70,7 +66,10 @@ namespace WallAdverts.Controllers
 
         public ActionResult Home()
         {
-            return View(db.Adverts);
+            if (Session["LayoutSrc"].ToString() != "~/Views/Shared/_LayoutAuth.cshtml")
+                return View(db.Adverts);
+            else
+                return View("HomeAuth", db.Adverts);
         }
 
         [HttpGet]
@@ -102,7 +101,7 @@ namespace WallAdverts.Controllers
             Session["Username"] = "";
             Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
             HttpContext.Response.Cookies["id"].Value = "";
-            return RedirectToAction("Home", "Home", db.Adverts);
+            return RedirectToAction("Home","Home", db.Adverts);
         }
 
         [HttpPost]
@@ -116,11 +115,15 @@ namespace WallAdverts.Controllers
                 ad.DateCreate = DateTime.Now;
                 ad.Description = descriptionAdvert;
                 ad.Name = nameAdvert;
-                int id=db.Adverts.Max(a => a.Id)+1;
-                if (Request.Files != null)
+                int idMax = 0;
+                if (db.Adverts.ToList().Count > 0)
+                    idMax = db.Adverts.Max(item => item.Id) + 1;
+
+
+                if (Request.Files.Count > 0)
                 {
-                    var name = "/Images/Adverts/" + ad.AuthorName+id+ ".jpg";
-                    Request.Files[0].SaveAs(Server.MapPath("~"+name));
+                    var name = "/Images/Adverts/" + ad.AuthorName + idMax + ".jpg";
+                    Request.Files[0].SaveAs(Server.MapPath("~" + name));
                     ad.ImageSrc = name;
                 }
                 else
@@ -151,8 +154,8 @@ namespace WallAdverts.Controllers
                 }
 
             }
-         //  return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
-              return PartialView("Wall", db.Adverts);
+            //  return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
+            return PartialView("Wall", db.Adverts);
         }
 
 
@@ -209,8 +212,7 @@ namespace WallAdverts.Controllers
             var result = db.Users.FirstOrDefault(u => u.Email == email) == null;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-
+        
 
         protected override void Dispose(bool disposing)
         {

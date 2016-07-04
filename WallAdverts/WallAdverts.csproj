@@ -343,6 +343,7 @@
     <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\Home\Wall.cshtml" />
     <Content Include="Views\Home\ShowProfile.cshtml" />
+    <Content Include="Views\Home\HomeAuth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Adverts\" />

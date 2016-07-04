@@ -6,6 +6,7 @@
     Layout = Session["LayoutSrc"].ToString();
 }
 
+
 <div id="wall" class="container body-content">
     @foreach (var item in Model.OrderByDescending(m => m.DateCreate))
     {
@@ -19,12 +20,13 @@
             </div>
             <div class="panel-footer text-right">
                 @Resources.Resource.Posted
-                @Html.ActionLink(item.AuthorName, "ShowProfile", new { id = @item.AuthorId });&nbsp;
+                @Html.ActionLink(item.AuthorName, "ShowProfile", new { id = @item.AuthorId });
                 @item.DateCreate.ToShortDateString()
             </div>
         </div>
     }
 </div>
+
 
 
 

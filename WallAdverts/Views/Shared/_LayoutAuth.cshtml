@@ -1,5 +1,4 @@
-﻿@model IEnumerable<WallAdverts.Models.Advert>
-
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,93 +65,14 @@
         </div>
     </nav>
 
-    <div id="newAdvert" class="panel col-md-12">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">@Resources.Resource.AddAdvert</a>
-                    </h4>
-
-                </div>
-                <div id="CollapsePanelAdvert" class="panel-collapse collapse">
-                    <div class="panel-body">
-
-                        <div class="form-group">
-                            <label for="nameAdvert" class="col-xs-3 control-label">@Resources.Resource.AdvertName</label>
-                            <div class="col-xs-7">
-                                <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="descriptionAdvert" class="col-sm-3 control-label">@Resources.Resource.AdvertDescription</label>
-                            <div class="col-xs-7">
-                                <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
-                            </div>
-                        </div>
-                        <label class="control-label">Upload File From Folder</label>
-                        <input type="file" name="upload" id="uploadFile" class="file-loading" webkitdirectory>
-
-                        <div class="form-group">
-                            <div class="col-xs-offset-5">
-                                <input type="submit" id="submit" value="@Resources.Resource.AddAdvert" class="btn btn-success" />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  
 
 
 
-    
-    <div id="wall" class="container body-content"> 
-       @RenderBody()            
-    </div>
 
-    <script type="text/javascript">
+        @RenderBody()
 
-$(document).on('ready', function() {
-    $("#uploadFile").fileinput({
-        browseLabel: 'Select Folder...'
-    });
-});
-    $('#submit').on('click', function (e) {
-        e.preventDefault();
-        var nameAdv=$("#nameAdvert").val();
-        var descAdv = $("#descriptionAdvert").val();
-        var wall = $("#wall");
-        var files = document.getElementById('uploadFile').files;
-        if (files.length > 0) {
-            if (window.FormData !== undefined) {
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("CreateAdvert", "Home")' + '?nameAdvert=' + nameAdv + '&descriptionAdvert=' + descAdv,
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        wall.empty();
-                        wall.html(result);
-                    },
-                    error: function (xhr, status, p3) {
-                        alert(xhr.responseText);
-                    }
-                });
-            } else {
-                alert("Браузер не поддерживает загрузку файлов HTML5!");
-            }
-        }
-    });
-    </script>
+  
 
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/moment-with-locales.js")
@@ -160,6 +80,10 @@ $(document).on('ready', function() {
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+
+
+  
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
