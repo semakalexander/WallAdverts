@@ -106,7 +106,7 @@ namespace WallAdverts.Controllers
         }
 
         [HttpPost]
-        public JsonResult CreateAdvert(string nameAdvert, string descriptionAdvert)
+        public ActionResult CreateAdvert(string nameAdvert, string descriptionAdvert)
         {
             if (nameAdvert.Trim() != "" && descriptionAdvert.Trim() != "")
             {
@@ -119,12 +119,12 @@ namespace WallAdverts.Controllers
                 int id=db.Adverts.Max(a => a.Id)+1;
                 if (Request.Files != null)
                 {
-                    var name = Server.MapPath("~/Images/Adverts/" + ad.AuthorName+id+ ".jpg");
-                    Request.Files[0].SaveAs(name);
+                    var name = "/Images/Adverts/" + ad.AuthorName+id+ ".jpg";
+                    Request.Files[0].SaveAs(Server.MapPath("~"+name));
                     ad.ImageSrc = name;
                 }
                 else
-                    ad.ImageSrc = "~/Images/Adverts/Default.jpg";
+                    ad.ImageSrc = "/Images/Adverts/Default.jpg";
 
                 db.Adverts.Add(ad);
                 try
@@ -151,8 +151,8 @@ namespace WallAdverts.Controllers
                 }
 
             }
-           return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
-            //  return PartialView("Wall", db.Adverts);
+         //  return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
+              return PartialView("Wall", db.Adverts);
         }
 
 
