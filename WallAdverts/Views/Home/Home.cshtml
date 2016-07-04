@@ -77,7 +77,8 @@
     $('#submit').on('click', function (e) {
         e.preventDefault();
         var nameAdv=$("#nameAdvert").val();
-        var descAdv=$("#descriptionAdvert").val();
+        var descAdv = $("#descriptionAdvert").val();
+        var wall = $("#wall");
         var files = document.getElementById('uploadFile').files;
         if (files.length > 0) {
             if (window.FormData !== undefined) {
@@ -85,14 +86,15 @@
                 for (var x = 0; x < files.length; x++) {
                     data.append("file" + x, files[x]);
                 }
-
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("CreateAdvert", "Home")'+'?nameAdvert='+nameAdv+'&descriptionAdvert='+descAdv,
+                    url: '@Url.Action("CreateAdvert", "Home")' + '?nameAdvert=' + nameAdv + '&descriptionAdvert=' + descAdv,
                     contentType: false,
                     processData: false,
                     data: data,
                     success: function (result) {
+                        wall.empty();                       
+                        wall.load(result);
                         alert(result);
                     },
                     error: function (xhr, status, p3) {

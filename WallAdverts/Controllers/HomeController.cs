@@ -116,9 +116,16 @@ namespace WallAdverts.Controllers
                 ad.DateCreate = DateTime.Now;
                 ad.Description = descriptionAdvert;
                 ad.Name = nameAdvert;
-                var name = Server.MapPath("~/Images/Adverts/" + ad.Id);
-                Request.Files[0].SaveAs(name);
-                ad.ImageSrc = name;
+                int id=db.Adverts.Max(a => a.Id)+1;
+                if (Request.Files != null)
+                {
+                    var name = Server.MapPath("~/Images/Adverts/" + ad.AuthorName+id+ ".jpg");
+                    Request.Files[0].SaveAs(name);
+                    ad.ImageSrc = name;
+                }
+                else
+                    ad.ImageSrc = "~/Images/Adverts/Default.jpg";
+
                 db.Adverts.Add(ad);
                 try
                 {
@@ -144,7 +151,7 @@ namespace WallAdverts.Controllers
                 }
 
             }
-            return Json(db.Adverts, JsonRequestBehavior.AllowGet);
+           return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
             //  return PartialView("Wall", db.Adverts);
         }
 

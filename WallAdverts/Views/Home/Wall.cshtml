@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<WallAdverts.Models.Advert>
 
+<div>
 @foreach (var item in Model.OrderByDescending(m=>m.DateCreate))
 {
    <div class="panel panel-success">
@@ -17,3 +18,4 @@
        </div>
    </div>
 }
+</div>
