@@ -1,5 +1,5 @@
-﻿@model  IEnumerable<WallAdverts.Models.Advert>
-
+﻿@model  PagedList.IPagedList<WallAdverts.Models.Advert>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Home";
@@ -23,20 +23,22 @@
                         <label for="nameAdvert" class="col-xs-3 control-label">@Resources.Resource.AdvertName</label>
                         <div class="col-xs-7">
                             <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
+                            <p id="errorName" style="color:red; display:none">@Resources.Resource.ErrorRequiredField</p>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="descriptionAdvert" class="col-sm-3 control-label">@Resources.Resource.AdvertDescription</label>
                         <div class="col-xs-7">
-                            <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4" id="descriptionAdvert"></textarea>
+                            <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4"></textarea>
+                            <p id="errorDesc" style="color:red; display:none">@Resources.Resource.ErrorRequiredField</p>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Upload File From Folder</label>
+                        <label class="col-md-3 control-label">@Resources.Resource.AdvertImage</label>
                         <div class="col-xs-7">
-                            <input type="file" name="upload" id="uploadFile" class="filestyle" data-classButton="btn btn-primary" data-input="false" />
+                            <input type="file" name="upload" id="uploadFile" class="filestyle" data-classButton="btn btn-primary" data-input="false"  accept="image/jpg,image/jpeg"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -52,7 +54,7 @@
 </div>
 
 <div id="wall" class="container body-content">
-    @foreach (var item in Model.OrderByDescending(m => m.DateCreate))
+    @foreach (var item in Model)
     {
         <div class="panel panel-success">
             <div class="panel-heading">
@@ -69,42 +71,58 @@
             </div>
         </div>
     }
-</div>
+    @Html.PagedListPager(Model, page => Url.Action("Home", new { page }))
 
+</div>
 
 @Scripts.Render("~/Scripts/bootstrap-filestyle.min.js")
 
 
 <script type="text/javascript">
-        $(":file").filestyle();
+    $(":file").filestyle();
 
-        $('#submit').on('click', function (e) {
-            e.preventDefault();
-            var nameAdv = $("#nameAdvert").val();
-            var descAdv = $("#descriptionAdvert").val();
-            var wall = $("#wall");
-            var files = document.getElementById('uploadFile').files;
-            if (files.length > 0) {
-                if (window.FormData !== undefined) {
-                    var data = new FormData();
-                    for (var x = 0; x < files.length; x++) {
-                        data.append("file" + x, files[x]);
-                    }}}
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("CreateAdvert", "Home")' + '?nameAdvert=' + nameAdv + '&descriptionAdvert=' + descAdv,
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        success: function (result) {
-                            wall.empty();
-                            wall.html(result);
-                        },
-                        error: function (xhr, status, p3) {
-                            alert(xhr.responseText);
-                        }
-                    });
+    $('#submit').on('click', function (e) {
+        e.preventDefault();
+        var nameAdv = $("#nameAdvert").val();
+        var descAdv = $("#descriptionAdvert").val();
+        var errorName = $("#errorName");
+        var errorDesc = $("#errorDesc");
 
+        if (nameAdv.trim() == "") {
+           errorName.css("display", "block");
+            return;
+        }
+        if (descAdv.trim() == "") {
+            errorDesc.css("display", "block");
+            return;
+        }
+        var wall = $("#wall");
+        var files = document.getElementById('uploadFile').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                data.append("file", files[0]);
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateAdvert", "Home")' + '?nameAdvert=' + nameAdv + '&descriptionAdvert=' + descAdv,
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (result) {
+                errorName.css("display", "none");
+                errorDesc.css("display", "none");
+                wall.empty();
+                wall.html(result);
+                $(":file").filestyle('clear');
+            },
+            error: function (xhr, status, p3) {
+                alert(xhr.responseText);
+            }
         });
+
+    });
 </script>
 

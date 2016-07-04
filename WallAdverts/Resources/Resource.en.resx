@@ -123,6 +123,9 @@
   <data name="AdvertDescription" xml:space="preserve">
     <value>Advert Description</value>
   </data>
+  <data name="AdvertImage" xml:space="preserve">
+    <value>Advert Image</value>
+  </data>
   <data name="AdvertName" xml:space="preserve">
     <value>Advert Name</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="UploadImageUser" xml:space="preserve">
     <value>Upload user image</value>
+  </data>
+  <data name="UserAdverts" xml:space="preserve">
+    <value>User Adverts</value>
   </data>
   <data name="UserLogin" xml:space="preserve">
     <value>Login</value>

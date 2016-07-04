@@ -32,6 +32,7 @@
         </div>
     </div>
     <div class="row">
+        <h3>@Resources.Resource.UserAdverts</h3>
         @foreach (var item in Model.Adverts.OrderByDescending(m => m.DateCreate))
         {
             <div class="panel panel-success">

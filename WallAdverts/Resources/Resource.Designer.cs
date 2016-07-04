@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Фото оголошення.
+        /// </summary>
+        public static string AdvertImage {
+            get {
+                return ResourceManager.GetString("AdvertImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Назва оголошення.
         /// </summary>
         public static string AdvertName {
@@ -277,7 +286,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Виклав.
+        ///   Looks up a localized string similar to Викладено.
         /// </summary>
         public static string Posted {
             get {
@@ -327,6 +336,15 @@ namespace Resources {
         public static string UploadImageUser {
             get {
                 return ResourceManager.GetString("UploadImageUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Оголошення автора.
+        /// </summary>
+        public static string UserAdverts {
+            get {
+                return ResourceManager.GetString("UserAdverts", resourceCulture);
             }
         }
         

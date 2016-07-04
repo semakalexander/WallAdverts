@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
@@ -19,23 +20,21 @@ namespace WallAdverts.Controllers
         {
             Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
             int cookieId;
-            if (HttpContext.Request.Cookies["id"] == null || !int.TryParse(HttpContext.Request.Cookies["id"].Value, out cookieId))
+            if (HttpContext.Request.Cookies["id"] != null)
             {
+                if (int.TryParse(HttpContext.Request.Cookies["id"].Value, out cookieId))
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == cookieId);
+                    if (user != null)
+                    {
+                        Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
+                        Session["Username"] = user.Login;
+                        return PartialView("HomeAuth", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1, 10));
+                    }
+                }
+            }
+            return PartialView("Home", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1, 10));
 
-                return PartialView("Home", db.Adverts);
-            }
-
-            var user = db.Users.FirstOrDefault(u => u.Id == cookieId);
-            if (user == null)
-            {
-                return PartialView("Home", db.Adverts);
-            }
-            else
-            {
-                Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
-                Session["Username"] = user.Login;
-                return PartialView("HomeAuth", db.Adverts);
-            }
         }
         
 
@@ -64,12 +63,12 @@ namespace WallAdverts.Controllers
             return Redirect(returnUrl);
         }
 
-        public ActionResult Home()
-        {
+        public ActionResult Home(int page=1)
+        {            
             if (Session["LayoutSrc"].ToString() != "~/Views/Shared/_LayoutAuth.cshtml")
-                return View(db.Adverts);
+                return View(db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(page,10));
             else
-                return View("HomeAuth", db.Adverts);
+                return View("HomeAuth", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(page, 10));
         }
 
         [HttpGet]
@@ -155,7 +154,7 @@ namespace WallAdverts.Controllers
 
             }
             //  return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
-            return PartialView("Wall", db.Adverts);
+            return PartialView("Wall", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1,10));
         }
 
 

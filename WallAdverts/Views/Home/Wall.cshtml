@@ -1,7 +1,8 @@
-﻿@model IEnumerable<WallAdverts.Models.Advert>
+﻿@model PagedList.IPagedList<WallAdverts.Models.Advert>
+@using PagedList.Mvc;
 
 <div>
-@foreach (var item in Model.OrderByDescending(m=>m.DateCreate))
+@foreach (var item in Model)
 {
    <div class="panel panel-success">
        <div class="panel-heading">
@@ -18,4 +19,7 @@
        </div>
    </div>
 }
+
+    @Html.PagedListPager(Model, page => Url.Action("Home", new { page }))
+
 </div>
