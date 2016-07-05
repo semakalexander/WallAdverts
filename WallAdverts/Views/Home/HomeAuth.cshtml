@@ -5,53 +5,72 @@
     ViewBag.Title = "Home";
     Layout = Session["LayoutSrc"].ToString();
 }
+<div class="head">
+    <div id="newAdvert" class="panel col-md-12">
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
 
-<div id="newAdvert" class="panel col-md-12">
-    <div class="panel-group">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">@Resources.Resource.AddAdvert</a>
+                    </h4>
 
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#CollapsePanelAdvert" class="btn btn-primary col-xs-offset-5">@Resources.Resource.AddAdvert</a>
-                </h4>
+                </div>
+                <div id="CollapsePanelAdvert" class="panel-collapse collapse">
+                    <div class="panel-body">
 
-            </div>
-            <div id="CollapsePanelAdvert" class="panel-collapse collapse">
-                <div class="panel-body">
-
-                    <div class="form-group">
-                        <label for="nameAdvert" class="col-xs-3 control-label">@Resources.Resource.AdvertName</label>
-                        <div class="col-xs-7">
-                            <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
-                            <p id="errorName" style="color:red; display:none">@Resources.Resource.ErrorRequiredField</p>
+                        <div class="form-group">
+                            <label for="nameAdvert" class="col-xs-3 control-label">@Resources.Resource.AdvertName</label>
+                            <div class="col-xs-7">
+                                <input type="text" id="nameAdvert" name="nameAdvert" class="form-control" />
+                                <p id="errorName" style="color:red; display:none">@Resources.Resource.ErrorRequiredField</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="descriptionAdvert" class="col-sm-3 control-label">@Resources.Resource.AdvertDescription</label>
-                        <div class="col-xs-7">
-                            <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4"></textarea>
-                            <p id="errorDesc" style="color:red; display:none">@Resources.Resource.ErrorRequiredField</p>
+                        <div class="form-group">
+                            <label for="descriptionAdvert" class="col-sm-3 control-label">@Resources.Resource.AdvertDescription</label>
+                            <div class="col-xs-7">
+                                <textarea id="descriptionAdvert" name="descriptionAdvert" class="form-control" rows="4"></textarea>
+                                <p id="errorDesc" style="color:red; display:none">@Resources.Resource.ErrorRequiredField</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">@Resources.Resource.AdvertImage</label>
-                        <div class="col-xs-7">
-                            <input type="file" name="upload" id="uploadFile" class="filestyle" data-classButton="btn btn-primary" data-input="false" accept="image/jpg,image/jpeg" />
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">@Resources.Resource.AdvertImage</label>
+                            <div class="col-xs-7">
+                                <input type="file" name="upload" id="uploadFile" class="filestyle" data-classButton="btn btn-primary" data-input="false" accept="image/png" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-offset-5">
-                            <input type="submit" id="submit" value="@Resources.Resource.AddAdvert" class="btn btn-success" />
-                        </div>
-                    </div>
 
+                        <div class="form-group">
+                            <div class="col-xs-offset-5">
+                                <input type="submit" id="submit" value="@Resources.Resource.AddAdvert" class="btn btn-success" />
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <form class="form form-inline filterByDate col-md-offset-6">
+        <div class="form-group">
+            <label for="dateFor" class="control-label">&nbsp;@Resources.Resource.FilterByDate &nbsp;</label>
+            @Html.TextBox("dateFrom", null, new { id = "dateFrom", @class = "form-control", placeholder = Resources.Resource.DateFormat })
+        </div>
+
+        <span class="">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+
+        <div class="form-group">
+            @Html.TextBox("dateTo", null, new { id = "dateTo", @class = "form-control", placeholder = Resources.Resource.DateFormat })
+        </div>
+
+    </form>
 </div>
+
+
+<br />
 
 <div id="wall" class="container body-content">
     <div class="panel-group">
@@ -84,6 +103,47 @@
 
 <script type="text/javascript">
     $(":file").filestyle();
+
+
+
+
+    $("#dateFrom").datepicker({
+        defaultDate: "-1w",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:@DateTime.Now.Year',
+        dateFormat: 'yy-mm-dd',
+        onClose: function (selectedDate) {
+            $("#dateTo").datepicker("option", "minDate", selectedDate);
+            var dateTo = $("#dateTo").datepicker('getDate');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FilterByDate", "Home")' + '?dateFrom=' + selectedDate + '&dateTo=' + dateTo,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    wall.empty();
+                    wall.html(result);
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+
+            });
+
+        },
+
+    });
+    $("#dateTo").datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:@DateTime.Now.Year',
+        dateFormat: 'yy-mm-dd',
+        onClose: function (selectedDate) {
+            $("#dateFrom").datepicker("option", "maxDate", selectedDate);
+        }
+    });
 
     $('#submit').on('click', function (e) {
         e.preventDefault();
@@ -128,5 +188,7 @@
         });
 
     });
+
+
 </script>
 

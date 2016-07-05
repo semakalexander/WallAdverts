@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -36,7 +37,7 @@ namespace WallAdverts.Controllers
             return PartialView("Home", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1, 10));
 
         }
-        
+
 
 
         public ActionResult ChangeLanguage(string lang)
@@ -63,10 +64,10 @@ namespace WallAdverts.Controllers
             return Redirect(returnUrl);
         }
 
-        public ActionResult Home(int page=1)
-        {            
+        public ActionResult Home(int page = 1)
+        {
             if (Session["LayoutSrc"].ToString() != "~/Views/Shared/_LayoutAuth.cshtml")
-                return View(db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(page,10));
+                return View(db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(page, 10));
             else
                 return View("HomeAuth", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(page, 10));
         }
@@ -100,7 +101,7 @@ namespace WallAdverts.Controllers
             Session["Username"] = "";
             Session["LayoutSrc"] = "~/Views/Shared/_Layout.cshtml";
             HttpContext.Response.Cookies["id"].Value = "";
-            return RedirectToAction("Home","Home", db.Adverts);
+            return RedirectToAction("Home", "Home", db.Adverts);
         }
 
         [HttpPost]
@@ -112,7 +113,7 @@ namespace WallAdverts.Controllers
                 ad.AuthorId = Convert.ToInt32(HttpContext.Request.Cookies["id"].Value);
                 ad.AuthorName = db.Users.FirstOrDefault(u => u.Id == ad.AuthorId).Login;
                 ad.DateCreate = DateTime.Now;
-                ad.Description = descriptionAdvert.Replace("_/_/NEWLINE_/_/","\n");
+                ad.Description = descriptionAdvert.Replace("_/_/NEWLINE_/_/", "\n");
                 ad.Name = nameAdvert;
                 int idMax = 0;
                 if (db.Adverts.ToList().Count > 0)
@@ -121,7 +122,7 @@ namespace WallAdverts.Controllers
 
                 if (Request.Files.Count > 0)
                 {
-                    var name = "/Images/Adverts/" + ad.AuthorName + idMax + ".jpg";
+                    var name = "/Images/Adverts/" + ad.AuthorName + idMax + Path.GetExtension(Request.Files[0].FileName);
                     Request.Files[0].SaveAs(Server.MapPath("~" + name));
                     ad.ImageSrc = name;
                 }
@@ -154,10 +155,29 @@ namespace WallAdverts.Controllers
 
             }
             //  return Json(db.Adverts,"text/html", JsonRequestBehavior.AllowGet);
-            return PartialView("Wall", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1,10));
+            return PartialView("Wall", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1, 10));
         }
 
 
+        public ActionResult FilterByDate(string dateFrom, string dateTo)
+        {
+            DateTime dateF = new DateTime();
+            if (dateFrom == "null")
+                dateF = db.Adverts.Min(advert => advert.DateCreate);
+            else
+                DateTime.TryParseExact(dateFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateF);
+
+            DateTime dateT = new DateTime();
+            if (dateTo == "null")
+                dateT = db.Adverts.Max(advert => advert.DateCreate);
+            else
+                DateTime.TryParseExact(dateTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateT);
+
+            var list = db.Adverts.Where(advert => advert.DateCreate > dateF && advert.DateCreate < dateT)
+                .OrderByDescending(advert => advert.DateCreate);
+            return PartialView("Wall",list               
+                .ToPagedList(1, 10));
+        }
 
         [HttpGet]
         public ActionResult Registration()
@@ -174,7 +194,7 @@ namespace WallAdverts.Controllers
                 fileUpload.SaveAs(path);
                 if (user.Number == null)
                     user.Number = "";
-                user.ImageSrc = "\\Images\\Users\\" + user.Login;
+                user.ImageSrc = "\\Images\\Users\\" + user.Login + Path.GetExtension(fileUpload.FileName);
                 user.DateRegister = DateTime.Now;
                 user.Role = "User";
                 db.Users.Add(user);
@@ -198,6 +218,8 @@ namespace WallAdverts.Controllers
             return View(profile);
         }
 
+
+
         [HttpGet]
         public JsonResult CheckLogin(string login)
         {
@@ -211,7 +233,7 @@ namespace WallAdverts.Controllers
             var result = db.Users.FirstOrDefault(u => u.Email == email) == null;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
 
         protected override void Dispose(bool disposing)
         {

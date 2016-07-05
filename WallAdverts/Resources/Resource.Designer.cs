@@ -241,6 +241,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Фільтр за датою.
+        /// </summary>
+        public static string FilterByDate {
+            get {
+                return ResourceManager.GetString("FilterByDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uk.
         /// </summary>
         public static string LanguageName {

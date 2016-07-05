@@ -177,6 +177,9 @@
   <data name="ErrorTypeEmail" xml:space="preserve">
     <value>Enter a correct email</value>
   </data>
+  <data name="FilterByDate" xml:space="preserve">
+    <value>Filter by date</value>
+  </data>
   <data name="LanguageName" xml:space="preserve">
     <value>uk</value>
   </data>

@@ -177,6 +177,9 @@
   <data name="ErrorTypeEmail" xml:space="preserve">
     <value>Введіть коректну адресу</value>
   </data>
+  <data name="FilterByDate" xml:space="preserve">
+    <value>Фільтр за датою</value>
+  </data>
   <data name="LanguageName" xml:space="preserve">
     <value>uk</value>
   </data>

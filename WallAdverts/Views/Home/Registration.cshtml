@@ -3,7 +3,6 @@
     ViewBag.Title = "Registration";
     Layout = Session["LayoutSrc"].ToString();
 }
-
 <div class="panel col-md-offset-2 col-md-8">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -79,5 +78,5 @@
 
 
 <script type="text/javascript">
-    $('.datepicker').datepicker(); //Initialise any date pickers
+    $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd', changeMonth:true, changeYear:true});
 </script>
