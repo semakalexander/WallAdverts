@@ -1,52 +1,79 @@
 ﻿@model PagedList.IPagedList<WallAdverts.Models.User>
 @using PagedList.Mvc
-    @{
-        ViewBag.Title = "AdminPanel";
-    }
+@{
+    ViewBag.Title = "AdminPanel";
+    Layout = Session["LayoutSrc"].ToString();
+}
 
+<div id="wall" class="container body-content">
     <h2>AdminPanel</h2>
-
-    <div id="wall" class="container body-content">
-        <div class="panel-group">
-            @foreach (var user in Model)
+    <div class="panel-group">
+        @foreach (var user in Model)
             {
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3>@Html.ActionLink(@user.Login, "ShowProfile", new { id = user.Id })</h3>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="row">
+                        <h3>
+                            @Html.ActionLink(@user.Login, "ShowProfile", new { id = user.Id })
+
                         <select id="@user.Id" class="selectpicker show-tick">
-                            @if (user.Role == "user")
+                            @if (user.Role == "User")
                             {
-                                <option>@Resources.Resource.User</option>
-                                <option>@Resources.Resource.Moderator</option>
+                                <option value="User">@Resources.Resource.User</option>
+                                <option value="Moderator">@Resources.Resource.Moderator</option>
                             }
                             else
                             {
-                                <option>@Resources.Resource.Moderator</option>
-                                <option>@Resources.Resource.User</option>
+                                <option value="Moderator">@Resources.Resource.Moderator</option>
+                                <option value="User">@Resources.Resource.User</option>
                             }
-
                         </select>
+
+                        <span id="@string.Format("icon{0}",@user.Id)" style="display:none" class="glyphicon glyphicon-ok"></span>
+                    </h3>
                     </div>
-                    <div class="panel-body">
-                        <img class="userImg" src="@user.ImageSrc" />
-                        <div class="col-md-offset-3">
-                            <div class="col-md-3">
-                                <h5>@user.Email</h5>
-                                <h5>@user.Number</h5>
-                            </div>
-                            <div class="col-md-3">
-                                <h5>Дата народження: @user.DateBirthday.ToShortDateString()</h5>
-                                <h5>Дата реєстрації: @user.DateRegister.ToShortDateString()</h5>
-                            </div>
+
+
+
+
+
+                </div>
+                <div class="panel-body">
+                    <img class="userImg" src="@user.ImageSrc" />
+                    <div class="col-md-offset-3">
+                        <div class="col-md-3">
+                            <h5>@user.Email</h5>
+                            <h5>@user.Number</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Дата народження: @user.DateBirthday.ToShortDateString()</h5>
+                            <h5>Дата реєстрації: @user.DateRegister.ToShortDateString()</h5>
                         </div>
                     </div>
-                    <div class="panel-footer text-right">
-                        @Html.ActionLink(Resources.Resource.Delete, "DeleteProfile", new { id = @user.Id })
-                    </div>
                 </div>
-            }
-            @Html.PagedListPager(Model, page => Url.Action("Home", new { page }))
-        </div>
+                <div class="panel-footer text-right">
+                    @Html.ActionLink(Resources.Resource.Delete, "DeleteProfile", new { id = @user.Id })
+                </div>
+            </div>
+        }
+        @Html.PagedListPager(Model, page => Url.Action("Home", new { page }))
     </div>
+</div>
 
 
+<script type="text/javascript">
+    $(".selectpicker").on('change', function () {
+        var id = $(this).attr('id');
+        var option = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ChangeRole","Home")' + '?id=' + id + '&selectedRole=' + option,
+            contentType: false,
+            proccessData: false,
+            success: function () {
+                $('#icon' + id).fadeIn('fast').delay(2000).fadeOut('slow');
+
+            }
+        });
+    });
+</script>

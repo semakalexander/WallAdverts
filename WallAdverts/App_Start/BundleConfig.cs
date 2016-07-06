@@ -35,7 +35,7 @@ namespace WallAdverts
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
                       "~/Content/smoothles.jquery-ui.css",
-                      "~/Scripts/bootstrap-select.min.css"));
+                      "~/Content/bootstrap-select.min.css"));
 
 
         }

@@ -42,8 +42,7 @@ namespace WallAdverts.Controllers
 
         public ActionResult AdminPanel()
         {
-
-            return View();
+            return View(db.Users.Where(user=>user.Role!="Admin").ToList().ToPagedList(1,10));
         }
 
         public ActionResult ChangeLanguage(string lang)
@@ -70,6 +69,14 @@ namespace WallAdverts.Controllers
             return Redirect(returnUrl);
         }
 
+        public JsonResult ChangeRole(int id,string selectedRole)
+        {
+         var user=   db.Users.Find(id);
+            user.Role = selectedRole;
+            db.SaveChanges();
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult DeleteProfile(int? id)
         {
@@ -81,7 +88,7 @@ namespace WallAdverts.Controllers
             return View(user);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteProfile")]
         public ActionResult DeleteProfileConfirmed(int? id)
         {
             if (id == null)

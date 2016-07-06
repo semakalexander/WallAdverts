@@ -1,12 +1,16 @@
 ﻿@model WallAdverts.Models.User
 @{
     ViewBag.Title = "DeleteProfile";
+    Layout = Session["LayoutSrc"].ToString();
+
 }
 
-<h2>@Resources.Resource.Delete?</h2>
-@Html.DisplayForModel()
-@using (Html.BeginForm())
-{
-    @Html.ActionLink(Resources.Resource.No,"AdminPanel", null,new { @class="btn btn-default" })
-    <input type="submit" class="btn btn-primary"  value="@Resources.Resource.Yes"/>
-}
+<div class="container-body text-center">
+    <h2>@Resources.Resource.Delete?</h2>
+    @Html.DisplayForModel()
+    @using (Html.BeginForm())
+    {
+        @Html.ActionLink(Resources.Resource.No, "AdminPanel", null, new { @class = "btn btn-default" })
+        <input type="submit" class="btn btn-primary" value="@Resources.Resource.Yes" />
+    }
+</div>
