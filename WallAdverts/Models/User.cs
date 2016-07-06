@@ -31,7 +31,7 @@ namespace WallAdverts.Models
 
         [Remote("CheckEmail", "Home", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorEmailBusy")]
         [Required(ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorRequiredField")]
-        [DataType(DataType.EmailAddress, ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "ErrorTypeEmail")]
+        [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessageResourceType =typeof(Resources.Resource),ErrorMessageResourceName ="ErrorRegExEmail")]
         [Display(Name = "Email", ResourceType = typeof(Resources.Resource))]
         public string Email { get; set; }
 
@@ -42,7 +42,7 @@ namespace WallAdverts.Models
         public DateTime DateBirthday { get; set; }
 
         [Display(Name = "DateRegister", ResourceType = typeof(Resources.Resource))]
-        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DateRegister { get; set; }
 

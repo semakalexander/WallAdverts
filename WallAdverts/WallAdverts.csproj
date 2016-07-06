@@ -353,6 +353,11 @@
     <Content Include="Views\Home\Wall.cshtml" />
     <Content Include="Views\Home\ShowProfile.cshtml" />
     <Content Include="Views\Home\HomeAuth.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\MyProfile.cshtml" />
+    <Content Include="Views\Home\EditProfile.cshtml" />
+    <Content Include="Views\Home\AdminPanel.cshtml" />
+    <Content Include="Views\Home\DeleteProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Adverts\" />

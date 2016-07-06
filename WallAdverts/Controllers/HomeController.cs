@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Globalization;
 using System.IO;
@@ -30,6 +31,7 @@ namespace WallAdverts.Controllers
                     {
                         Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
                         Session["Username"] = user.Login;
+                        Session["Role"] = user.Role;
                         return PartialView("HomeAuth", db.Adverts.OrderByDescending(m => m.DateCreate).ToPagedList(1, 10));
                     }
                 }
@@ -38,7 +40,11 @@ namespace WallAdverts.Controllers
 
         }
 
+        public ActionResult AdminPanel()
+        {
 
+            return View();
+        }
 
         public ActionResult ChangeLanguage(string lang)
         {
@@ -64,6 +70,86 @@ namespace WallAdverts.Controllers
             return Redirect(returnUrl);
         }
 
+        [HttpGet]
+        public ActionResult DeleteProfile(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+            User user = db.Users.Find(id);
+            if (user == null)
+                return HttpNotFound();
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteProfileConfirmed(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+            User user = db.Users.Find(id);
+            if (user == null)
+                return HttpNotFound();
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("AdminPanel");
+        }
+
+        public ActionResult MyProfile()
+        {
+            int cookieId;
+            if (!int.TryParse(HttpContext.Request.Cookies["id"].Value, out cookieId))
+                return HttpNotFound();
+            User user = db.Users.FirstOrDefault(u => u.Id == cookieId);
+            if (user == null)
+                return HttpNotFound();
+            var adverts = db.Adverts.Where(a => a.AuthorId == cookieId).ToList();
+            MyProfile profile = new MyProfile() { User = user, Adverts = adverts };
+            return user.Login == "admin" ? View("AdminProfile", profile) : View(profile);
+        }
+
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            int id;
+            if (!int.TryParse(HttpContext.Request.Cookies["id"].Value, out id))
+                return HttpNotFound();
+            User user = db.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+                return HttpNotFound();
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(User user, HttpPostedFileBase fileUpload)
+        {
+            ViewBag.Message = "Неможливо змынити";
+            ViewBag.MessageClass = "alert-danger";
+            ModelState.Remove("Login");
+            ModelState.Remove("Email");
+
+            if (ModelState.IsValid)
+            {
+                var userOld = db.Users.Find(user.Id);
+                userOld.Password = user.Password;
+                userOld.DateBirthday = user.DateBirthday;
+
+                if (fileUpload != null)
+                {
+                    string path = AppDomain.CurrentDomain.BaseDirectory + "Images\\Users\\" + userOld.Login + Path.GetExtension(fileUpload.FileName);
+                    fileUpload.SaveAs(path);
+                    userOld.ImageSrc = "\\Images\\Users\\" + userOld.Login + Path.GetExtension(fileUpload.FileName);
+                }
+                if (user.Number != null)
+                    userOld.Number = user.Number;
+
+                db.SaveChanges();
+                ViewBag.Message = Resources.Resource.EditSuccess;
+                ViewBag.MessageClass = "alert-success";
+
+            }
+            return View("EditProfile", user);
+        }
+
         public ActionResult Home(int page = 1)
         {
             if (Session["LayoutSrc"].ToString() != "~/Views/Shared/_LayoutAuth.cshtml")
@@ -87,6 +173,7 @@ namespace WallAdverts.Controllers
                 HttpContext.Response.Cookies["id"].Value = userGet.Id.ToString();
                 Session["LayoutSrc"] = "~/Views/Shared/_LayoutAuth.cshtml";
                 Session["Username"] = userGet.Login;
+                Session["Role"] = userGet.Role;
                 return RedirectToAction("Home", "Home", db.Adverts);
             }
             else
@@ -162,21 +249,23 @@ namespace WallAdverts.Controllers
         public ActionResult FilterByDate(string dateFrom, string dateTo)
         {
             DateTime dateF = new DateTime();
-            if (dateFrom == "null")
+            if (dateFrom == "null" || dateFrom == "")
                 dateF = db.Adverts.Min(advert => advert.DateCreate);
             else
                 DateTime.TryParseExact(dateFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateF);
 
             DateTime dateT = new DateTime();
-            if (dateTo == "null")
+            if (dateTo == "null" || dateTo == "")
                 dateT = db.Adverts.Max(advert => advert.DateCreate);
             else
                 DateTime.TryParseExact(dateTo, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateT);
-
-            var list = db.Adverts.Where(advert => advert.DateCreate > dateF && advert.DateCreate < dateT)
-                .OrderByDescending(advert => advert.DateCreate);
-            return PartialView("Wall",list               
-                .ToPagedList(1, 10));
+            var list = db.Adverts.Where(advert => advert.DateCreate.CompareTo(dateF) != -1 && advert.DateCreate.CompareTo(dateT) != 1)
+                .OrderByDescending(advert => advert.DateCreate).ToList();
+            if (list.Count > 0)
+                return PartialView("Wall", list.ToPagedList(1, 10));
+            else
+                ViewBag.ErrorMessage = Resources.Resource.FilterByDateNotFound;
+            return PartialView("Error");
         }
 
         [HttpGet]

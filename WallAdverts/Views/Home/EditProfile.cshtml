@@ -1,0 +1,82 @@
+﻿@model WallAdverts.Models.User
+@{
+    ViewBag.Title = "Registration";
+    Layout = Session["LayoutSrc"].ToString();
+}
+
+<div style="text-align:center;" class="alert @ViewBag.MessageClass">
+    @ViewBag.Message
+</div>
+<div class="panel col-md-offset-2 col-md-8">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>@Resources.Resource.Editing</h2>
+        </div>
+
+        <div class="panel-body" style="display:block">
+            @using (Html.BeginForm("EditProfile", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                <fieldset>
+                    @Html.HiddenFor(m=>m.Id)
+                  
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = Resources.Resource.EnterPassword })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Number, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.Number, new { @class = "form-control", placeholder = Resources.Resource.UsersCanSeeNumber })
+                            @Html.ValidationMessageFor(m => m.Number)
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DateBirthday, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.DateBirthday,"{0:yyyy-MM-dd}", new { @class = "form-control datepicker", placeholder = Resources.Resource.DateFormat })
+                            @Html.ValidationMessageFor(m => m.DateBirthday)
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <label class="btn btn-primary" for="fileUpload">
+                                <input id="fileUpload" name="fileUpload" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());" accept="images/jpg,images/jpeg">
+                                @Resources.Resource.UploadImageUser
+                            </label>
+                            <span class='label label-info' id="upload-file-info"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" class="btn btn-primary" name="formReg" value="@Resources.Resource.Edit" />
+                        </div>
+                    </div>
+                   
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('.datepicker').datepicker(
+        {
+            pickTime:false,
+            defaultDate: "-18y",
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            rangeYear: "1900:2016"
+        });
+</script>

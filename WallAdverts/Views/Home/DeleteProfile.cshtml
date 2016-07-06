@@ -1,0 +1,12 @@
+﻿@model WallAdverts.Models.User
+@{
+    ViewBag.Title = "DeleteProfile";
+}
+
+<h2>@Resources.Resource.Delete?</h2>
+@Html.DisplayForModel()
+@using (Html.BeginForm())
+{
+    @Html.ActionLink(Resources.Resource.No,"AdminPanel", null,new { @class="btn btn-default" })
+    <input type="submit" class="btn btn-primary"  value="@Resources.Resource.Yes"/>
+}

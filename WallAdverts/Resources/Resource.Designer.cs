@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Редагувати користувачів.
+        /// </summary>
+        public static string AdminEditProfiles {
+            get {
+                return ResourceManager.GetString("AdminEditProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Панель адміністратора.
+        /// </summary>
+        public static string AdminPanel {
+            get {
+                return ResourceManager.GetString("AdminPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Опис оголошення.
         /// </summary>
         public static string AdvertDescription {
@@ -129,6 +147,42 @@ namespace Resources {
         public static string DateRegister {
             get {
                 return ResourceManager.GetString("DateRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Видалити.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Редагувати.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Редагування.
+        /// </summary>
+        public static string Editing {
+            get {
+                return ResourceManager.GetString("Editing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Успішно змінено!.
+        /// </summary>
+        public static string EditSuccess {
+            get {
+                return ResourceManager.GetString("EditSuccess", resourceCulture);
             }
         }
         
@@ -196,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Введіть коректну адресу.
+        /// </summary>
+        public static string ErrorRegExEmail {
+            get {
+                return ResourceManager.GetString("ErrorRegExEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Логін повинен складатись з латинських літер(починатись обов&apos;язково з літери) та цифр, розмірністю від 4 до 20 символів.
         /// </summary>
         public static string ErrorRegExLogin {
@@ -232,20 +295,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Введіть коректну адресу.
-        /// </summary>
-        public static string ErrorTypeEmail {
-            get {
-                return ResourceManager.GetString("ErrorTypeEmail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Фільтр за датою.
         /// </summary>
         public static string FilterByDate {
             get {
                 return ResourceManager.GetString("FilterByDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Не знайдено новин в такому діапазоні.
+        /// </summary>
+        public static string FilterByDateNotFound {
+            get {
+                return ResourceManager.GetString("FilterByDateNotFound", resourceCulture);
             }
         }
         
@@ -277,6 +340,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Модератор.
+        /// </summary>
+        public static string Moderator {
+            get {
+                return ResourceManager.GetString("Moderator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ні.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Номер телефону.
         /// </summary>
         public static string Number {
@@ -300,6 +381,15 @@ namespace Resources {
         public static string Posted {
             get {
                 return ResourceManager.GetString("Posted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Профіль.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
         
@@ -349,6 +439,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Користувач.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Оголошення автора.
         /// </summary>
         public static string UserAdverts {
@@ -381,6 +480,15 @@ namespace Resources {
         public static string WallAdvertsName {
             get {
                 return ResourceManager.GetString("WallAdvertsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Так.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

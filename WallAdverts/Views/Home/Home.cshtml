@@ -5,7 +5,19 @@
     ViewBag.Title = "Home";
     Layout = Session["LayoutSrc"].ToString();
 }
+<form class="form form-inline filterByDate col-md-offset-6">
+    <div class="form-group">
+        <label for="dateFor" class="control-label">&nbsp;@Resources.Resource.FilterByDate &nbsp;</label>
+        @Html.TextBox("dateFrom", null, new { id = "dateFrom", @class = "form-control", placeholder = Resources.Resource.DateFormat })
+    </div>
 
+    <span class="">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+
+    <div class="form-group">
+        @Html.TextBox("dateTo", null, new { id = "dateTo", @class = "form-control", placeholder = Resources.Resource.DateFormat })
+    </div>
+
+</form>
 
 <div id="wall" class="container body-content">
     @foreach (var item in Model.OrderByDescending(m => m.DateCreate))
@@ -35,3 +47,55 @@
 
 
 
+<script type="text/javascript">
+    $("#dateFrom").datepicker({
+        defaultDate: "-0d",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:@DateTime.Now.Year',
+        dateFormat: 'yy-mm-dd',
+        onClose: function (selectedDate) {
+            $("#dateTo").datepicker("option", "minDate", selectedDate);
+            var dateTo = $("#dateTo").datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            var wall = $("#wall");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FilterByDate", "Home")' + '?dateFrom=' + selectedDate + '&dateTo=' + dateTo,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    wall.empty();
+                    wall.html(result);
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    });
+    $("#dateTo").datepicker({
+        defaultDate: "+0d",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:@DateTime.Now.Year',
+        dateFormat: 'yy-mm-dd',
+        onClose: function (selectedDate) {
+            $("#dateFrom").datepicker("option", "maxDate", selectedDate);
+            var dateFrom = $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            var wall = $("#wall");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FilterByDate", "Home")' + '?dateFrom=' + dateFrom + '&dateTo=' + selectedDate,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    wall.empty();
+                    wall.html(result);
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<WallAdverts.Models.User>
+@using PagedList.Mvc
+    @{
+        ViewBag.Title = "AdminPanel";
+    }
+
+    <h2>AdminPanel</h2>
+
+    <div id="wall" class="container body-content">
+        <div class="panel-group">
+            @foreach (var user in Model)
+            {
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>@Html.ActionLink(@user.Login, "ShowProfile", new { id = user.Id })</h3>
+                        <select id="@user.Id" class="selectpicker show-tick">
+                            @if (user.Role == "user")
+                            {
+                                <option>@Resources.Resource.User</option>
+                                <option>@Resources.Resource.Moderator</option>
+                            }
+                            else
+                            {
+                                <option>@Resources.Resource.Moderator</option>
+                                <option>@Resources.Resource.User</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="panel-body">
+                        <img class="userImg" src="@user.ImageSrc" />
+                        <div class="col-md-offset-3">
+                            <div class="col-md-3">
+                                <h5>@user.Email</h5>
+                                <h5>@user.Number</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <h5>Дата народження: @user.DateBirthday.ToShortDateString()</h5>
+                                <h5>Дата реєстрації: @user.DateRegister.ToShortDateString()</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right">
+                        @Html.ActionLink(Resources.Resource.Delete, "DeleteProfile", new { id = @user.Id })
+                    </div>
+                </div>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Home", new { page }))
+        </div>
+    </div>
+
+
