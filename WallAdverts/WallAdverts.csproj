@@ -426,6 +426,7 @@
     <Content Include="Views\Home\EditProfile.cshtml" />
     <Content Include="Views\Home\AdminPanel.cshtml" />
     <Content Include="Views\Home\DeleteProfile.cshtml" />
+    <Content Include="Views\Home\DeleteAdvert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Adverts\" />

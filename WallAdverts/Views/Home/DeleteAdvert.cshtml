@@ -1,0 +1,40 @@
+﻿@model WallAdverts.Models.Advert
+@{
+    ViewBag.Title = "DeleteAdvert";
+    Layout = Session["LayoutSrc"].ToString();
+
+}
+
+<div class="container-body">
+    <div class="panel">
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3>
+                    @Resources.Resource.Delete @Model.Name?
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <img class="advertImg" src="@Model.ImageSrc" />
+                <div class="col-md-offset-3">
+                    <pre>@MvcHtmlString.Create(@Model.Description.Replace(Environment.NewLine, "<br />"))</pre>
+                </div>
+            </div>
+
+            <div class="panel-footer text-right">
+                @Resources.Resource.Posted
+                @Html.ActionLink(Model.AuthorName, "ShowProfile", new { id = Model.AuthorId })
+                @Model.DateCreate.ToShortDateString()
+            </div>
+           
+        </div>
+        @using (Html.BeginForm())
+            {
+            <div class="col-lg-offset-5">
+                @Html.ActionLink(Resources.Resource.No, "Index", null, new { @class = "btn btn-default" })
+                <input type="submit" class="btn btn-primary" value="@Resources.Resource.Yes" />
+            </div>
+        }
+    </div> 
+</div>

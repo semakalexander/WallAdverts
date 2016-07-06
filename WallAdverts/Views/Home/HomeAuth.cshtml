@@ -80,7 +80,13 @@
             {
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3>@item.Name</h3>
+                    <h3>@item.Name
+                        @if (Session["Role"] != null && Session["Role"].ToString() == "Moderator")
+                        {
+                            @Html.ActionLink(" ", "DeleteAdvert", new { id = item.Id }, new { @class = "close text-right glyphicon glyphicon-remove" })
+                        }
+                    </h3>
+                  
                 </div>
                 <div class="panel-body">
                     <img class="advertImg" src="@item.ImageSrc" />
@@ -117,7 +123,7 @@
         dateFormat: 'yy-mm-dd',
         onClose: function (selectedDate) {
             $("#dateTo").datepicker("option", "minDate", selectedDate);
-            var dateTo = $("#dateTo").datepicker({ dateFormat: 'yy-mm-dd'}).val();
+            var dateTo = $("#dateTo").datepicker({ dateFormat: 'yy-mm-dd' }).val();
             var wall = $("#wall");
             $.ajax({
                 type: "POST",

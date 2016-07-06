@@ -45,9 +45,9 @@
                             <h5>@user.Email</h5>
                             <h5>@user.Number</h5>
                         </div>
-                        <div class="col-md-3">
-                            <h5>Дата народження: @user.DateBirthday.ToShortDateString()</h5>
-                            <h5>Дата реєстрації: @user.DateRegister.ToShortDateString()</h5>
+                        <div class="col-md-5">
+                            <h5>@Resources.Resource.DateBirthday: @user.DateBirthday.ToShortDateString()</h5>
+                            <h5>@Resources.Resource.DateRegister: @user.DateRegister.ToShortDateString()</h5>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             contentType: false,
             proccessData: false,
             success: function () {
-                $('#icon' + id).fadeIn('fast').delay(2000).fadeOut('slow');
+                $('#icon' + id).fadeIn('fast').delay(1250).fadeOut('slow');
 
             }
         });
